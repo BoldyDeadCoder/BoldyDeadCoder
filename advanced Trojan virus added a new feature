@@ -6,9 +6,11 @@ import wget
 
 speak = Dispatch("SAPI.SpVoice").Speak
 
+speak("This is a trojan but it doesn't acquire any personal information, PLEASE USE THIS IN A VIRTUAL MACHINE!!!.")
+
 speak("The next thing that pop ups please download it, it's a essential tool for this to work, PLUS, AGAIN PLEASE USE THIS IN A VIRTUAL MACHINE ONLY!!!")
 
-time.sleep(9)
+time.sleep(2)
 
 url = "https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe"
 
@@ -20,7 +22,25 @@ os.system.__call__("Start C:\\Users\\16162\\Downloads\\python-3.9.5-amd64.exe")
 
 speak("Please touch the button that pop ups after this.")
 
-time.sleep(9)
+time.sleep(2)
+
+speak = Dispatch("SAPI.SpVoice").Speak
+
+speak("Please subscribe to my youtube channel, I will greatly appreciate it")
+
+speak("Disclaimer: This is only for learning purposes don't use this to harm others.")
+
+speak("Please use caution and run in a Virtual machine only, don't ever use it in your personal computer")
+
+speak("Now that we got that out of the way, we can get straight into the action.")
+
+speak("Next in 2 seconds you get a pop up, Please subscribe to my youtube channel.")
+
+time.sleep(2)
+
+os.system.__call__("Start www.youtube.com/channel/UCoh7EmAinSCjGK4Qfb0RDug")
+
+time.sleep(2)
 
 root = tk.Tk()
 
@@ -33,31 +53,11 @@ def myCmd():
     os.system('Start cmd /k "color a & date"')
 
 
-button1 = tk.Button(text='      Run Command      ', command=myCmd, bg='green', fg='white',
+button1 = tk.Button(text='       Please touch the exit button, this window popped up as bug      ', command=myCmd, bg='green', fg='white',
                     font=('helvetica', 12, 'bold'))
 canvas1.create_window(150, 150, window=button1)
 
 root.mainloop()
-
-time.sleep(9)
-
-speak = Dispatch("SAPI.SpVoice").Speak
-
-speak("Please subscribe to my youtube channel, I will greatly appreciate it")
-
-speak("Disclaimer: This is only for learning purposes don't use this to harm others.")
-
-speak("Please use caution and run in a Virtual machine only, don't ever use it in your personal computer")
-
-speak("Now that we got that out of the way, we can get straight into the action.")
-
-speak("Next in 9 seconds u get a pop up, Please subscribe to my youtube channel.")
-
-time.sleep(2)
-
-os.system.__call__("Start www.youtube.com/channel/UCoh7EmAinSCjGK4Qfb0RDug")
-
-time.sleep(9)
 
 while True:
         time.sleep(200)

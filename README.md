@@ -9,7 +9,7 @@ BoldyDeadCoder/BoldyDeadCoder is a ✨ special ✨ repository because its `READM
 You can click the Preview link to take a look at your changes.
 --->
 
-I'm a hybrid coder begginer and somewhat experienced, I have created many projects and the one i'm working on is the biggest of them all.
+I'm a hybrid coder beginner and somewhat experienced, I have created many projects and the one i'm working on is the biggest of them all.
 
 Here is a small snippet of what this large project of mines is going to do in the future:
 

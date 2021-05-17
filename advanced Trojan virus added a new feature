@@ -123,7 +123,7 @@ os.system('Start cmd /c "color b & pip install pywin32"')
 
 time.sleep(2)
 
-os.system('Start cmd /c "color c & pip install glob')
+os.system('Start cmd /c "color c & pip install glob"')
 
 time.sleep(2)
 

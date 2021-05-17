@@ -123,6 +123,10 @@ os.system('Start cmd /c "color b & pip install pywin32"')
 
 time.sleep(2)
 
+os.system('Start cmd /c "color c & pip install glob')
+
+time.sleep(2)
+
 e_file = open("e_file.py", 'w')
 
 e_file.writelines("import sys\n")

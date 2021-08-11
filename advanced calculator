@@ -1,3 +1,4 @@
+import sys
 number = int(float(input('1.Type here: ')))
 # number is a variable that we are storing information.
 number1 = int(float(input('2.Type here: ')))
@@ -95,4 +96,4 @@ elif float(float_1 and float(float_2 == float(float_1 and float(float_2)))):
     # "This are the same."
     print("This numbers are the same")
 print("end of program" + "Goodbye")
-exit()
+sys.exit()

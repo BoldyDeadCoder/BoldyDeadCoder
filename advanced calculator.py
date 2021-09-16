@@ -97,3 +97,4 @@ elif float(float_1 and float(float_2 == float(float_1 and float(float_2)))):
     print("This numbers are the same")
 print("end of program" + "Goodbye")
 sys.exit()
+

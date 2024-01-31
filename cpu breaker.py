@@ -23,7 +23,7 @@ create_and_run_vbs("This_man_file")
 create_and_run_vbs("HI_file")
 create_and_run_vbs("Girl!")
 create_and_run_vbs("Life_file")
-    def create_read_only_file(im_watching_file, (create_and_run_vbs)):
+    def create_read_only_file(im_watching_file, create_and_run_vbs):
         with open(filename, 'w') as file:
             file.write(content)
             os.chmod(filename, 0o444)  # Makes the file read-only

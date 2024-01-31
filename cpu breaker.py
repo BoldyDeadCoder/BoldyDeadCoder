@@ -15,11 +15,7 @@ def create_and_run_vbs(file_name):
     base = os.path.splitext(file_name + ".txt")[0]
     os.rename(file_name + ".txt", base + ".vbs")
     os.system("Start " + file_name + ".vbs")
-
-def create_read_only_file(filename, content):
-    with open(filename, 'w') as file:
-        file.write(content)
-    os.chmod(filename, 0o444)  # Makes the file read-only
+    os.chmod(file_name + ".vbs", 0o444)  # Makes the file read-only
 
 if is_admin():
     create_and_run_vbs("im_watching_file")
@@ -27,7 +23,6 @@ if is_admin():
     create_and_run_vbs("HI_file")
     create_and_run_vbs("Girl!")
     create_and_run_vbs("Life_file")
-    create_read_only_file('test.txt', 'This is a test')
     print("I have admin privileges!")
 else:
     # Re-run the program with admin rights

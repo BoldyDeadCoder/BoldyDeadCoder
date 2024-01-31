@@ -111,3 +111,7 @@ delete_reg = 'C://home//User//Documents//delete_reg.txt'
 base = os.path.splitext(delete_reg)[0]
 os.rename(delete_reg, base + '.bat')
 os.system("Start C://home//User//Documents//delete_reg.bat")
+
+else:
+    # Re-run the program with admin rights
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)

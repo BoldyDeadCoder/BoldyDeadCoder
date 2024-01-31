@@ -18,10 +18,10 @@ def create_and_run_vbs(file_name):
     os.chmod(file_name + ".vbs", 0o444)  # Makes the file read-only
 
 if is_admin():
-    create_and_run_vbs("im_watching_file")
-    create_and_run_vbs("This_man_file")
+    create_and_run_vbs("I_love_file")
+    create_and_run_vbs("This_PC_file")
     create_and_run_vbs("HI_file")
-    create_and_run_vbs("Girl!")
+    create_and_run_vbs("three_file")
     create_and_run_vbs("Life_file")
     print("I have admin privileges!")
 else:

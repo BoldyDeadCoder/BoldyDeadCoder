@@ -4,6 +4,12 @@
 import winreg as reg
 import os
 
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+        
 def AddToRegistry():
     # in python __file__ is the instant of
     # file path where it was executed

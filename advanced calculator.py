@@ -64,7 +64,7 @@ def create_permutation_group(*permutations):
     return PermutationGroup(*perms)
 
 
-def calculate_galois_group(polynomial): 
+def calculate_galois_group(polynomial):
     x = symbols('x')
     return galois_group(polynomial, x)
 
@@ -243,6 +243,48 @@ def calculate_matrix_transpose(matrix):
     return np.transpose(matrix).tolist()
 
 
+def validate_vector_input(vector):
+    try:
+        # Convert the input to a NumPy array
+        np_vector = np.array(vector, dtype=float)
+
+        # Check if the input is a one-dimensional array
+        if np_vector.ndim != 1:
+            print("Error: Input is not a one-dimensional vector.")
+            return None
+
+        return np_vector
+    except ValueError:
+        print("Error: Input contains non-numeric values.")
+        return None
+
+
+def validate_complex_input(complex_number):
+    try:
+        # Convert the input to a complex number
+        complex_number = complex(complex_number)
+        return complex_number
+    except ValueError:
+        print("Error: Input is not a valid complex number.")
+        return None
+
+
+def validate_matrix_input(matrix):
+    try:
+        # Convert the input to a NumPy array
+        np_matrix = np.array(matrix, dtype=float)
+
+        # Check if the input is a two-dimensional array
+        if np_matrix.ndim != 2:
+            print("Error: Input is not a valid matrix.")
+            return None
+
+        return np_matrix
+    except ValueError:
+        print("Error: Matrix contains non-numeric values.")
+        return None
+
+
 def main():
     while True:
         try:
@@ -381,6 +423,31 @@ def main():
                 elif operation == "field_isomorphisms":
                     field2 = input("Enter the second field: ")
                     print(f"Result: {calculate_field_isomorphisms(field, field2)}")
+                elif operation in ["vector_add", "vector_sub", "scalar_mul"]:
+                    v1 = input("Enter the first vector (comma-separated): ").split(',')
+                    v2 = input("Enter the second vector (comma-separated): ").split(',')
+                    v1 = validate_vector_input(v1)
+                    v2 = validate_vector_input(v2)
+                    if v1 is None or v2 is None:
+                        continue  # Skip this iteration if the input is invalid
+                elif operation in ["complex_add", "complex_sub", "complex_mul", "complex_div"]:
+                    z1 = input("Enter the first complex number: ")
+                    z2 = input("Enter the second complex number: ")
+                    z1 = validate_complex_input(z1)
+                    z2 = validate_complex_input(z2)
+                    if z1 is None or z2 is None:
+                        continue  # Skip this iteration if the input is invalid
+                elif operation in ["matrix_add", "matrix_sub", "matrix_mul", "matrix_div"]:
+                    m1 = input("Enter the first matrix (comma-separated rows, semicolon-separated columns): ").split(
+                        ';')
+                    m2 = input("Enter the second matrix (comma-separated rows, semicolon-separated columns): ").split(
+                        ';')
+                    m1 = [row.split(',') for row in m1]
+                    m2 = [row.split(',') for row in m2]
+                    m1 = validate_matrix_input(m1)
+                    m2 = validate_matrix_input(m2)
+                    if m1 is None or m2 is None:
+                        continue  # Skip this iteration if the input is invalid
             else:
                 print("Error: Invalid operator. Please enter valid options.")
         except ValueError:

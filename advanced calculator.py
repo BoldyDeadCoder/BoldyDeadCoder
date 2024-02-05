@@ -64,7 +64,7 @@ def create_permutation_group(*permutations):
     return PermutationGroup(*perms)
 
 
-def calculate_galois_group(polynomial):
+def calculate_galois_group(polynomial): 
     x = symbols('x')
     return galois_group(polynomial, x)
 

@@ -1,7 +1,6 @@
-import cmath
 import math
-import sympy as sp
-from sympy import symbols, Matrix
+from sympy import symbols, diff, integrate
+import numpy as np
 
 
 def calculate_angle(line1, line2):
@@ -24,110 +23,56 @@ def calculate_angle(line1, line2):
     return angle
 
 
-def calculate_dot_product(v1, v2):
-    """
-    Computes the dot product of two vectors.
-    """
-    return sum(i * j for i, j in zip(v1, v2))
+def calculate_square_root(num):
+    return math.sqrt(num)
 
 
-def calculate_determinant(matrix):
-    """
-    Computes the determinant of a matrix.
-    """
-    return Matrix(matrix).det()
+def calculate_cube_root(num):
+    return num ** (1 / 3)
 
 
-def calculate_cross_product(v1, v2):
-    """
-    Computes the cross product of two vectors.
-    """
-    return [v1[1] * v2[2] - v1[2] * v2[1], v1[2] * v2[0] - v1[0] * v2[2], v1[0] * v2[1] - v1[1] * v2[0]]
+def calculate_logarithmic_derivative(num):
+    return 1 / num
 
 
-def calculate_integral(f, x, a, b):
-    """
-    Computes the definite integral of a function from a to b.
-    """
-    x = sp.symbols('x')
-    f = sp.sympify(f)
-    integral = sp.integrate(f, (x, a, b))
-    return integral
-
-
-def solve_complex_argument(z):
-    """
-    Calculates the argument (phase) of a complex number.
-    """
-    return cmath.phase(z)
-
-
-def calculate_square_root(x):
-    """
-    Computes the square root of a non-negative number.
-    """
-    return math.sqrt(x)
-
-
-def calculate_cube_root(x):
-    """
-    Computes the cube root of a number.
-    """
-    return x ** (1 / 3)
-
-
-def calculate_logarithmic_derivative(x):
-    """
-    Computes the derivative of the natural logarithm function at a given point.
-    """
-    return 1 / x
-
-
-def convert_to_polar_form(z):
-    """
-    Converts a complex number to polar form (magnitude and argument).
-    """
-    magnitude = abs(z)
-    argument = cmath.phase(z)
-    return magnitude, argument
+def convert_to_polar_form(complex_num):
+    return abs(complex_num), np.angle(complex_num)
 
 
 def calculate_power_of_iota(n):
-    """
-    Computes the value of i raised to the power of n.
-    """
-    return cmath.exp(1j * n * math.pi / 2)
+    return ['1', 'i', '-1', '-i'][n % 4]
 
 
-def calculate_modulus(z):
-    """
-    Computes the modulus (magnitude) of a complex number.
-    """
-    return abs(z)
+def calculate_modulus(complex_num):
+    return abs(complex_num)
 
 
-def calculate_conjugate(z):
-    """
-    Computes the conjugate of a complex number.
-    """
-    return z.conjugate()
+def calculate_conjugate(complex_num):
+    return complex_num.conjugate()
 
 
 def sum_of_cubes(n):
-    """
-    Computes the sum of the cubes of the first n natural numbers.
-    """
-    return (n * (n + 1) // 2) ** 2
+    return (n * (n + 1) / 2) ** 2
 
 
 def calculate_derivative(f, x):
-    """
-    Computes the derivative of a function at a given point.
-    """
-    x = sp.symbols('x')
-    f = sp.sympify(f)
-    derivative = sp.diff(f, x)
-    return derivative
+    return diff(f, x)
+
+
+def calculate_integral(f, x, a, b):
+    return integrate(f, (x, a, b))
+
+
+def calculate_dot_product(v1, v2):
+    return np.dot(v1, v2)
+
+
+def calculate_cross_product(v1, v2):
+    return np.cross(v1, v2)
+
+
+def calculate_determinant(matrix):
+    return np.linalg.det(matrix)
 
 
 def main():

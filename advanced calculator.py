@@ -119,7 +119,7 @@ def main():
         try:
             Var1 = float(input("Enter a number: "))
             Var2 = float(input("Enter another number: "))
-            operation = input("Enter an operator (+, -, *, /, sqrt, cbrt, log_der, polar, iota, mod, conj, cube_roots_of_unity, complex_roots, euler, gaussian, sum_of_cubes, derivative, integral, dot_product, cross_product, determinant): ")
+            operation = input("Enter an operator (+, -, *, /, sqrt, cbrt, log_der, polar, iota, mod, conj, cube_roots_of_unity, complex_roots, euler, gaussian, sum_of_cubes, derivative, integral, dot_product, cross_product, determinant, angle): ")
 
             if operation == "+":
                 print(f"Result: {Var1 + Var2}")

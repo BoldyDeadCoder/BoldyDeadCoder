@@ -3,15 +3,16 @@ import math
 import sympy as sp
 from sympy import symbols, Matrix
 
+
 def calculate_angle(line1, line2):
     # Calculate the direction of the lines
     dir1 = [line1[1][0] - line1[0][0], line1[1][1] - line1[0][1]]
     dir2 = [line2[1][0] - line2[0][0], line2[1][1] - line2[0][1]]
 
     # Calculate the angle between the lines
-    dot_product = dir1[0]*dir2[0] + dir1[1]*dir2[1]
-    mag1 = math.sqrt(dir1[0]**2 + dir1[1]**2)
-    mag2 = math.sqrt(dir2[0]**2 + dir2[1]**2)
+    dot_product = dir1[0] * dir2[0] + dir1[1] * dir2[1]
+    mag1 = math.sqrt(dir1[0] ** 2 + dir1[1] ** 2)
+    mag2 = math.sqrt(dir2[0] ** 2 + dir2[1] ** 2)
 
     # Check if the lines are parallel
     if mag1 == 0 or mag2 == 0:
@@ -22,11 +23,13 @@ def calculate_angle(line1, line2):
 
     return angle
 
+
 def calculate_dot_product(v1, v2):
     """
     Computes the dot product of two vectors.
     """
-    return sum(i*j for i, j in zip(v1, v2))
+    return sum(i * j for i, j in zip(v1, v2))
+
 
 def calculate_determinant(matrix):
     """
@@ -34,11 +37,13 @@ def calculate_determinant(matrix):
     """
     return Matrix(matrix).det()
 
+
 def calculate_cross_product(v1, v2):
     """
     Computes the cross product of two vectors.
     """
-    return [v1[1]*v2[2] - v1[2]*v2[1], v1[2]*v2[0] - v1[0]*v2[2], v1[0]*v2[1] - v1[1]*v2[0]]
+    return [v1[1] * v2[2] - v1[2] * v2[1], v1[2] * v2[0] - v1[0] * v2[2], v1[0] * v2[1] - v1[1] * v2[0]]
+
 
 def calculate_integral(f, x, a, b):
     """
@@ -49,11 +54,13 @@ def calculate_integral(f, x, a, b):
     integral = sp.integrate(f, (x, a, b))
     return integral
 
+
 def solve_complex_argument(z):
     """
     Calculates the argument (phase) of a complex number.
     """
     return cmath.phase(z)
+
 
 def calculate_square_root(x):
     """
@@ -61,17 +68,20 @@ def calculate_square_root(x):
     """
     return math.sqrt(x)
 
+
 def calculate_cube_root(x):
     """
     Computes the cube root of a number.
     """
-    return x**(1/3)
+    return x ** (1 / 3)
+
 
 def calculate_logarithmic_derivative(x):
     """
     Computes the derivative of the natural logarithm function at a given point.
     """
     return 1 / x
+
 
 def convert_to_polar_form(z):
     """
@@ -81,11 +91,13 @@ def convert_to_polar_form(z):
     argument = cmath.phase(z)
     return magnitude, argument
 
+
 def calculate_power_of_iota(n):
     """
     Computes the value of i raised to the power of n.
     """
     return cmath.exp(1j * n * math.pi / 2)
+
 
 def calculate_modulus(z):
     """
@@ -93,17 +105,20 @@ def calculate_modulus(z):
     """
     return abs(z)
 
+
 def calculate_conjugate(z):
     """
     Computes the conjugate of a complex number.
     """
     return z.conjugate()
 
+
 def sum_of_cubes(n):
     """
     Computes the sum of the cubes of the first n natural numbers.
     """
     return (n * (n + 1) // 2) ** 2
+
 
 def calculate_derivative(f, x):
     """
@@ -114,12 +129,15 @@ def calculate_derivative(f, x):
     derivative = sp.diff(f, x)
     return derivative
 
+
 def main():
     while True:
         try:
             Var1 = float(input("Enter a number: "))
             Var2 = float(input("Enter another number: "))
-            operation = input("Enter an operator (+, -, *, /, sqrt, cbrt, log_der, polar, iota, mod, conj, cube_roots_of_unity, complex_roots, euler, gaussian, sum_of_cubes, derivative, integral, dot_product, cross_product, determinant, angle): ")
+            operation = input("Enter an operator (+, -, *, /, sqrt, cbrt, log_der, polar, iota, mod, conj, "
+                              "cube_roots_of_unity, complex_roots, euler, gaussian, sum_of_cubes, derivative, "
+                              "integral, dot_product, cross_product, determinant, angle): ")
 
             if operation == "+":
                 print(f"Result: {Var1 + Var2}")
@@ -172,7 +190,9 @@ def main():
                 v2 = [float(i) for i in input("Enter the second vector (comma-separated): ").split(',')]
                 print(f"Cross product of {v1} and {v2}: {calculate_cross_product(v1, v2)}")
             elif operation == "determinant":
-                matrix = [[float(j) for j in i.split(',')] for i in input("Enter the matrix (rows separated by semicolons, elements within a row separated by commas): ").split(';')]
+                matrix = [[float(j) for j in i.split(',')] for i in input(
+                    "Enter the matrix (rows separated by semicolons, elements within a row separated by commas): ").split(
+                    ';')]
                 print(f"Determinant of the matrix {matrix}: {calculate_determinant(matrix)}")
             elif operation == "angle":
                 while True:
@@ -199,6 +219,7 @@ def main():
             print("Error: Invalid input. Please enter valid numbers.")
         except Exception as e:
             print(f"An error occurred: {str(e)}")
+
 
 if __name__ == "__main__":
     main()

@@ -3,6 +3,25 @@ import math
 import sympy as sp
 from sympy import symbols, Matrix
 
+def calculate_angle(line1, line2):
+    # Calculate the direction of the lines
+    dir1 = [line1[1][0] - line1[0][0], line1[1][1] - line1[0][1]]
+    dir2 = [line2[1][0] - line2[0][0], line2[1][1] - line2[0][1]]
+
+    # Calculate the angle between the lines
+    dot_product = dir1[0]*dir2[0] + dir1[1]*dir2[1]
+    mag1 = math.sqrt(dir1[0]**2 + dir1[1]**2)
+    mag2 = math.sqrt(dir2[0]**2 + dir2[1]**2)
+
+    # Check if the lines are parallel
+    if mag1 == 0 or mag2 == 0:
+        return "The lines are parallel."
+
+    cos_angle = dot_product / (mag1 * mag2)
+    angle = math.degrees(math.acos(cos_angle))
+
+    return angle
+
 def calculate_dot_product(v1, v2):
     """
     Computes the dot product of two vectors.
@@ -155,6 +174,25 @@ def main():
             elif operation == "determinant":
                 matrix = [[float(j) for j in i.split(',')] for i in input("Enter the matrix (rows separated by semicolons, elements within a row separated by commas): ").split(';')]
                 print(f"Determinant of the matrix {matrix}: {calculate_determinant(matrix)}")
+            elif operation == "angle":
+                while True:
+                    try:
+                        line1 = [tuple(map(float,
+                                           input("Enter the first point of the first line (comma-separated): ").split(
+                                               ','))),
+                                 tuple(map(float,
+                                           input("Enter the second point of the first line (comma-separated): ").split(
+                                               ',')))]
+                        line2 = [tuple(map(float,
+                                           input("Enter the first point of the second line (comma-separated): ").split(
+                                               ','))),
+                                 tuple(map(float,
+                                           input("Enter the second point of the second line (comma-separated): ").split(
+                                               ',')))]
+                        print(f"Angle between the lines: {calculate_angle(line1, line2)}")
+                        break
+                    except ValueError:
+                        print("Error: Invalid input. Please enter valid numbers in the format 'x,y'.")
             else:
                 print("Error: Invalid operator. Please enter valid options.")
         except ValueError:

@@ -1,3 +1,5 @@
+import numpy as np
+
 def union(a, b):
     a = set(map(int, a.split(',')))
     b = set(map(int, b.split(',')))
@@ -17,6 +19,27 @@ def symmetric_difference(a, b):
     a = set(map(int, a.split(',')))
     b = set(map(int, b.split(',')))
     return a.symmetric_difference(b)
+
+def calculate_dot_product(v1, v2):
+    return np.dot(v1, v2)
+
+def calculate_cross_product(v1, v2):
+    return np.cross(v1, v2)
+
+def calculate_determinant(matrix):
+    return np.linalg.det(matrix)
+
+def validate_complex_input(z):
+    try:
+        return complex(z)
+    except ValueError:
+        return None
+
+def validate_matrix_input(m):
+    try:
+        return [list(map(float, row)) for row in m]
+    except ValueError:
+        return None
 
 def calculate(operation, a, b):
     if operation in ["union", "intersection", "difference", "symmetric_difference"]:

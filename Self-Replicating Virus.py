@@ -3,6 +3,13 @@ import glob
 import os
 import fcntl
 import msvcrt
+import ctypes
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
 
 def read_file(file):
     with open(file, 'r') as f:
@@ -75,5 +82,8 @@ def main():
     cool_code()
 
 if __name__ == '__main__':
-    import subprocess
-    subprocess.Popen(['python3', '-c', 'import script; script.main()'], close_fds=True)
+    if not is_admin():
+        # Re-run the program with admin rights
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+    else:
+        main()

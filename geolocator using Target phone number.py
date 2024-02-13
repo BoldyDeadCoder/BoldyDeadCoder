@@ -1,8 +1,8 @@
 import phonenumbers
 from phonenumbers import timezone, geocoder, carrier, NumberParseException
 import csv
-import sys
 import os
+from tkinter import Tk, Label, Entry, Button, Text, Scrollbar, VERTICAL, messagebox, filedialog, Menu
 
 def parse_phone_number(phone_number):
     """Parse and validate a phone number, returning detailed information if valid."""
@@ -32,39 +32,57 @@ def save_results(phone_number, details, filename="phone_number_details.csv"):
 
         writer.writerow({'phone_number': phone_number, **details})
 
-def main_loop():
-    """Main loop for processing phone numbers with an option to exit."""
-    while True:
-        phone_number = input("Type here the Target phone number or 'exit' to quit: ").strip()
-        if phone_number.lower() == 'exit':
-            print("Exiting program.")
-            break
-        elif phone_number:
-            valid, details_or_message = parse_phone_number(phone_number)
-            if valid:
-                print("Time Zone(s):", details_or_message['time_zone'])
-                print("Region:", details_or_message['region'])
-                print("Carrier:", details_or_message['carrier'])
-                save_results(phone_number, details_or_message)
-                print(f"Details for {phone_number} have been saved.")
-            else:
-                print(details_or_message)
-        else:
-            print("No phone number was entered. Please try again.")
+def gui():
+    """Create a GUI for the phone number parser."""
+    window = Tk()
+    window.title("Phone Number Details Extractor")
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        # Handle phone number passed as command-line argument
-        phone_number = sys.argv[1]
+    def on_submit():
+        phone_number = entry.get()
+        if not phone_number.strip():
+            messagebox.showerror("Error", "Please enter a phone number.")
+            return
         valid, details_or_message = parse_phone_number(phone_number)
         if valid:
-            print("Time Zone(s):", details_or_message['time_zone'])
-            print("Region:", details_or_message['region'])
-            print("Carrier:", details_or_message['carrier'])
-            save_results(phone_number, details_or_message)
-            print(f"Details for {phone_number} have been saved.")
+            result_text = f"Time Zone(s): {details_or_message['time_zone']}\n"
+            result_text += f"Region: {details_or_message['region']}\n"
+            result_text += f"Carrier: {details_or_message['carrier']}\n"
+            output.delete('1.0', END)
+            output.insert('1.0', result_text)
         else:
-            print(details_or_message)
-    else:
-        # Interactive mode
-        main_loop()
+            messagebox.showerror("Error", details_or_message)
+
+    def save_to_file():
+        phone_number = entry.get()
+        valid, details_or_message = parse_phone_number(phone_number)
+        if valid:
+            filename = filedialog.asksaveasfilename(defaultextension=".csv",
+                                                    filetypes=[("CSV Files", "*.csv"), ("All Files", "*.*")])
+            if filename:
+                save_results(phone_number, details_or_message, filename)
+                messagebox.showinfo("Success", "Phone number details saved successfully.")
+        else:
+            messagebox.showerror("Error", "Invalid phone number or no phone number entered.")
+
+    menu = Menu(window)
+    window.config(menu=menu)
+    file_menu = Menu(menu, tearoff=0)
+    menu.add_cascade(label="File", menu=file_menu)
+    file_menu.add_command(label="Save As...", command=save_to_file)
+    file_menu.add_separator()
+    file_menu.add_command(label="Exit", command=window.quit)
+
+    Label(window, text="Enter phone number:").pack()
+    entry = Entry(window, width=50)
+    entry.pack()
+    Button(window, text="Submit", command=on_submit).pack()
+    output = Text(window, height=10, width=50)
+    output.pack()
+    scrollbar = Scrollbar(window, command=output.yview, orient=VERTICAL)
+    scrollbar.pack(side="right", fill="y")
+    output.config(yscrollcommand=scrollbar.set)
+
+    window.mainloop()
+
+if __name__ == "__main__":
+    gui()

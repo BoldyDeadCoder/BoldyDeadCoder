@@ -1,13 +1,22 @@
 import math
 import re
-import logging
+import sympy as sp
+from fractions import Fraction
 import pandas as pd  # If you plan to return pandas Series
+import itertools
+import json
+import networkx as nx
+import matplotlib.pyplot as plt
+import logging
+from multiprocessing import Pool, Manager
+import os
+import time
+from tqdm import tqdm
 from math import isclose
+from itertools import permutations
 from decimal import Decimal, getcontext, InvalidOperation
 from cmath import sqrt
-from typing import List, Union, Tuple
-from IPython.display import display, Math
-
+from typing import Union, Tuple
 import numpy as np
 from sympy import solve, limit, series, oo, SympifyError, exp, Function, sympify, Poly, latex, galois_group, simplify, \
     expand
@@ -44,39 +53,254 @@ def validate_limits(input_str):
         return None
 
 
-def is_element_generator(element, group):
+def group_operation(x, y, operation_type):
+    operations = {
+        "addition": lambda x, y: x + y,
+        "multiplication": lambda x, y: x * y,
+        "matrix_multiplication": lambda x, y: np.dot(x, y),
+        "string_concatenation": lambda x, y: x + y,
+    }
+
+    operation = operations.get(operation_type)
+    if operation:
+        return operation(x, y)
+    else:
+        raise ValueError(f"Unsupported operation type: {operation_type}")
+
+
+def list_all_generators(group, operation):
     """
-    Checks if the given element is a generator of the group.
-    This is a placeholder function; actual implementation depends on the operation and group representation.
+    Lists all generators of the group.
     """
-    # Implement logic based on the group's operation to check if `element` can generate all other elements
-    generated = {element}
-    # This is a simplistic and incorrect implementation placeholder.
-    # You would need to apply the operation repeatedly to `element` to try to generate all other elements.
-    return generated == set(group)
+    # Input validation
+    if not group:
+        raise ValueError("Group cannot be empty.")
+    if not callable(operation):
+        raise ValueError("Operation must be a callable function.")
+
+    # Memoization cache for the operation
+    operation_cache = {}
+
+    # Function to apply the operation with memoization
+    def apply_operation(x, y):
+        key = (x, y)
+        if key not in operation_cache:
+            operation_cache[key] = operation(x, y)
+        return operation_cache[key]
+
+    # Function to check if an element is a generator
+    def is_generator(element):
+        try:
+            generated_elements = set()
+            current_element = element
+            for _ in range(len(group)):
+                if current_element in generated_elements:
+                    return False  # Early termination
+                generated_elements.add(current_element)
+                current_element = apply_operation(current_element, element)
+            return len(generated_elements) == len(group)
+        except Exception as e:
+            logging.error(f"Error in is_generator for element {element}: {e}")
+            return False
+
+    # Parallel processing to compute generators
+    try:
+        with Pool() as pool:
+            generators = [element for element, is_gen in zip(group, pool.map(is_generator, group)) if is_gen]
+    except Exception as e:
+        logging.error(f"Error in parallel processing: {e}")
+        generators = []
+
+    return generators
+
+
+def parse_group_equation(equation, delimiter=',', valid_element_pattern=None):
+    try:
+        # Check for required characters
+        if '=' not in equation or '{' not in equation or '}' not in equation:
+            raise ValueError("Equation must contain '=', '{', and '}'.")
+
+        # Extract and clean the group string
+        group_str = equation.split('=')[1].strip().replace('{', '').replace('}', '')
+        group = [element.strip() for element in group_str.split(delimiter)]
+
+        # Validate each group element
+        if valid_element_pattern is not None:
+            pattern = re.compile(valid_element_pattern)
+            for element in group:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid element format: {element}")
+
+        return group
+    except ValueError as e:
+        logging.error(f"Error parsing group equation: {e}")
+        raise
 
 
 # Group Theory
-def calculate_group_order(group):
+def analyze_and_visualize_subgroups(group, operation, export_filename="/mnt/data/subgroups.json"):
     """
-    Calculates the order of the group and checks if the group is cyclic.
-
-    :param group: List or set representing the group elements
-    :return: Tuple containing the order of the group and whether it is cyclic
+    Identifies all subgroups within the group, exports the subgroups to a JSON file,
+    and visualizes the subgroups using networkx and matplotlib.
     """
-    group_order = len(group)
-    is_cyclic = any(is_element_generator(element, group, None) for element in
-                    group)  # Assuming `None` as a placeholder for the actual operation
 
-    return group_order, is_cyclic
+    def is_subgroup(subset, group, operation):
+        identity = None
+        for g in group:
+            if operation(g, g) == g:  # Simplistic check for identity
+                identity = g
+                break
+        if not identity or identity not in subset:
+            return False
+        for a in subset:
+            for b in subset:
+                if operation(a, b) not in subset:
+                    return False
+        for a in subset:
+            inverse_found = False
+            for b in subset:
+                if operation(a, b) == identity and operation(b, a) == identity:
+                    inverse_found = True
+                    break
+            if not inverse_found:
+                return False
+        return True
+
+    subgroups = []
+    for i in range(1, len(group) + 1):
+        for subset in itertools.combinations(group, i):
+            if is_subgroup(subset, group, operation):
+                subgroups.append(set(subset))
+
+    # Export subgroups to JSON
+    with open(export_filename, "w") as f:
+        json.dump(list(map(list, subgroups)), f)
+
+    # Visualize subgroups
+    G = nx.Graph()
+    for element in group:
+        G.add_node(str(element))
+    for subgroup in subgroups:
+        H = G.subgraph(map(str, subgroup))
+        pos = nx.spring_layout(H)
+        nx.draw(H, pos, with_labels=True, node_color='skyblue')
+    plt.show()
+
+    return subgroups  # Optionally return the subgroups for further processing
+
+
+class InvalidInputError(Exception):
+    """Custom exception for invalid input."""
+    pass
+
+
+class RelationError(InvalidInputError):
+    """Custom exception for errors related to relations."""
+    pass
+
+
+class TimeoutError(InvalidInputError):
+    """Custom exception for exceeding the execution time limit."""
+    pass
+
+
+def calculate_group_order(generators, relations, profiling=False, timeout=None, cycle_length=None, symmetric=False,
+                          transitive=False, disjoint_sets=False):
+    # Input validation
+    if not all(isinstance(generator, int) for generator in generators):
+        raise InvalidInputError("Generators must be a list of integers.")
+    if len(generators) != len(set(generators)):
+        raise InvalidInputError("Generators must be unique.")
+    if not all(
+            isinstance(relation, tuple) and len(relation) > 1 and all(isinstance(i, int) for i in relation) for relation
+            in relations):
+        raise RelationError("Relations must be a list of tuples of integers, each with at least two elements.")
+    if not isinstance(profiling, bool):
+        raise InvalidInputError("Profiling must be a boolean value.")
+    if timeout is not None and (not isinstance(timeout, (int, float)) or timeout <= 0):
+        raise InvalidInputError("Timeout must be a positive number.")
+
+    start_time = time.time()
+
+    # Check relation consistency
+    max_relation_index = max(max(relation) for relation in relations)
+    if max_relation_index >= len(generators):
+        raise RelationError("Relations contain indices that are out of bounds for the generators list.")
+    for relation in relations:
+        if len(relation) != len(set(relation)):
+            raise RelationError("Each relation must contain unique elements.")
+        if cycle_length is not None and len(relation) != cycle_length:
+            raise RelationError(f"All relations must form cycles of length {cycle_length}.")
+
+    # Check for symmetry
+    if symmetric:
+        for relation in relations:
+            if tuple(reversed(relation)) not in relations:
+                raise RelationError("Relations must be symmetric.")
+
+    # Check for transitivity
+    if transitive:
+        for relation in relations:
+            for other_relation in relations:
+                if relation[-1] == other_relation[0] and (relation[0], other_relation[-1]) not in relations:
+                    raise RelationError("Relations must be transitive.")
+
+    # Check for disjoint sets
+    if disjoint_sets:
+        all_elements = set()
+        for relation in relations:
+            if any(element in all_elements for element in relation):
+                raise RelationError("Relations must form disjoint sets.")
+            all_elements.update(relation)
+
+    # Function to check if a permutation is valid
+    def is_valid_permutation(perm, valid_perms_cache):
+        perm_key = tuple(perm)
+        if perm_key in valid_perms_cache:
+            return valid_perms_cache[perm_key]
+
+        perm_dict = {i: perm[i] for i in range(len(generators))}
+        for relation in relations:
+            for i in range(len(relation)):
+                if perm_dict[relation[i]] != relation[(i + 1) % len(relation)]:
+                    valid_perms_cache[perm_key] = False
+                    return False
+
+        valid_perms_cache[perm_key] = True
+        return True
+
+    # Generate all permutations
+    all_perms = list(permutations(range(len(generators))))
+
+    # Parallel processing to compute valid permutations
+    try:
+        with Manager() as manager:
+            valid_perms_cache = manager.dict()
+            with Pool(os.cpu_count()) as pool:
+                valid_perms = list(
+                    tqdm(pool.starmap(is_valid_permutation, [(perm, valid_perms_cache) for perm in all_perms]),
+                         total=len(all_perms), desc="Calculating valid permutations"))
+    except Exception as e:
+        raise InvalidInputError(f"Error during parallel processing: {e}")
+
+    # Count the number of valid permutations
+    valid_count = sum(valid_perms)
+
+    # Logging and profiling
+    end_time = time.time()
+    logging.info(f"Number of valid permutations: {valid_count}")
+    if profiling:
+        logging.info(f"Execution time: {end_time - start_time:.2f} seconds")
+
+    # Check for timeout
+    if timeout is not None and (end_time - start_time) > timeout:
+        raise TimeoutError("Function execution exceeded the specified timeout.")
+
+    return valid_count
 
 
 def calculate_group_elements(group):
     return list(group.elements)
-
-
-def calculate_subgroups(group):
-    return list(group.subgroups())
 
 
 def calculate_group_isomorphisms(group1, group2):
@@ -655,42 +879,391 @@ def solve_polynomial_equation(polynomial: Union[str, Poly],
         return solutions
 
 
-def calculate_matrix_addition(m1, m2):
-    matrix1 = np.array(m1)
-    matrix2 = np.array(m2)
-    return np.add(matrix1, matrix2).tolist()
+def detect_content_type(matrix):
+    """
+    Enhanced function to detect if the matrix content is numeric, symbolic, or mixed.
+    """
+    has_numeric = has_symbolic = False
+    for row in matrix:
+        for val in row:
+            if isinstance(val, sp.Expr):
+                # Checking specifically for symbolic expressions
+                has_symbolic = True
+                if val.is_Number:
+                    # sp.Expr that is a Number is still considered numeric
+                    has_numeric = True
+            elif isinstance(val, (int, float)):
+                has_numeric = True
+            else:
+                # Any non-SymPy and non-numeric value will be considered symbolic for safety
+                has_symbolic = True
+
+    # Determining the content type based on the flags
+    if has_numeric and has_symbolic:
+        return "mixed"
+    elif has_symbolic:
+        return "symbolic"
+    return "numeric"
+
+
+def pretty_print_matrix(matrix, title="Matrix", unicode_borders=False, colorize=True):
+    """
+    Unified pretty_print_matrix function that combines improved formatting,
+    optional Unicode borders, and color-coding.
+    """
+    print(f"\n{title}:")
+    content_type = detect_content_type(matrix)
+    if isinstance(matrix, sp.Matrix):
+        matrix = matrix.tolist()
+
+    # Setting up border characters based on the unicode_borders flag
+    border_char = '│' if unicode_borders else '|'
+    dash_char = '─' if unicode_borders else '-'
+    corner_char = '┼' if unicode_borders else '+'
+
+    # Determine column widths
+    col_widths = [max(len(format_element(row[i], 0, content_type, colorize=False)) for row in matrix) + 2 for i in
+                  range(len(matrix[0]))]
+    border_line = corner_char + corner_char.join(dash_char * width for width in col_widths) + corner_char
+
+    # Print top border
+    print(border_line)
+    for row in matrix:
+        formatted_row = [format_element(row[i], col_widths[i], content_type, colorize) for i in range(len(row))]
+        row_str = ' '.join(formatted_row)
+        print(f"{border_char} {row_str} {border_char}")
+    # Print bottom border
+    print(border_line)
+
+
+def safe_eval(expr):
+    """
+    Safely evaluates a mathematical expression, including handling fractions, parentheses, and symbolic expressions.
+    """
+    try:
+        # Handle numeric and fractional inputs
+        return float(Fraction(expr))
+    except ValueError:
+        # Handle symbolic expressions
+        return sp.sympify(expr)
+
+
+def input_matrix(prompt):
+    """
+    Enhances user input for matrix to handle mathematical expressions, symbolic expressions, and dynamic sizes.
+    Provides immediate visual feedback on entered matrix.
+    """
+    print(prompt + "\n(Examples: '1/2', '2*(3+4)', 'x + y'. Press 'r' to restart, 'd' when done.)")
+    matrix = []
+    cols = None
+
+    while True:
+        row_input = input("Enter next row values separated by space or 'r' to restart, 'd' to finish: ").strip().lower()
+        if row_input == 'r':
+            print("Restarting matrix input...")
+            matrix.clear()  # Clear the matrix and restart input
+            continue
+        elif row_input == 'd' and matrix:
+            break  # Finish input if 'd' is entered and matrix is not empty
+        try:
+            row = [safe_eval(val) for val in row_input.split()]
+            if not matrix:  # If first row, set the number of columns
+                cols = len(row)
+            elif len(row) != cols:
+                raise ValueError(f"All rows must have the same number of columns. Expected {cols}, got {len(row)}.")
+            matrix.append(row)
+        except (ValueError, SyntaxError, sp.SympifyError) as e:
+            print(f"Invalid input: {e}. Please try again.")
+
+    # Provide visual feedback of entered matrix
+    pretty_print_matrix(matrix, "Entered Matrix")
+    return matrix
+
+
+def convert_to_sympy_matrix(matrix):
+    """Converts a matrix to a SymPy Matrix for symbolic calculations."""
+    if isinstance(matrix, np.ndarray):
+        return sp.Matrix(matrix.tolist())
+    elif isinstance(matrix, list):
+        return sp.Matrix(matrix)
+    return matrix  # Assume it's already a SymPy Matrix if not list or ndarray
+
+
+def matrix_addition(m1, m2):
+    """
+    Robustly calculates the addition of two matrices, supporting symbolic expressions,
+    and automatically adjusting for different sized matrices.
+    """
+    # Convert inputs to SymPy matrices for uniform handling
+    matrix1 = convert_to_sympy_matrix(m1)
+    matrix2 = convert_to_sympy_matrix(m2)
+
+    # Ensure both matrices have the same dimensions, pad with zeros if necessary
+    rows1, cols1 = matrix1.shape
+    rows2, cols2 = matrix2.shape
+    if (rows1, cols1) != (rows2, cols2):
+        max_rows, max_cols = max(rows1, rows2), max(cols1, cols2)
+        matrix1 = matrix1.row_join(sp.zeros(rows1, max_cols - cols1)).col_join(sp.zeros(max_rows - rows1, max_cols))
+        matrix2 = matrix2.row_join(sp.zeros(rows2, max_cols - cols2)).col_join(sp.zeros(max_rows - rows2, max_cols))
+
+    # Perform addition
+    result_matrix = matrix1 + matrix2
+
+    # Convert back to list if both inputs were lists for consistency
+    if isinstance(m1, list) and isinstance(m2, list):
+        return result_matrix.tolist()
+    # For numpy array inputs, return a numpy array
+    elif isinstance(m1, np.ndarray) and isinstance(m2, np.ndarray):
+        return np.array(result_matrix.tolist())
+    # Otherwise, return as a SymPy Matrix
+    return result_matrix
+
+
+def save_matrix_to_file(matrix, filename="matrix_result.txt", format="txt"):
+    if format == "csv":
+        with open(filename, "w") as file:
+            for row in matrix:
+                file.write(",".join(str(val) for val in row) + "\n")
+    elif format == "json":
+        with open(filename, "w") as file:
+            json.dump(matrix, file)
+    else:  # Default to plain text
+        with open(filename, "w") as file:
+            for row in matrix:
+                file.write(" ".join(str(val) for val in row) + "\n")
+    print(f"Matrix saved to {filename} in {format} format.")
+
+
+def load_matrix_from_file(filename):
+    with open(filename, "r") as file:
+        matrix = [line.strip().split() for line in file.readlines()]
+    return [[sp.sympify(value) for value in row] for row in matrix]
+
+
+def input_or_load_matrix(prompt):
+    choice = input(prompt + " Enter 'file' to load from a file, or anything else to input manually: ").strip().lower()
+    if choice == 'file':
+        filename = input("Enter the filename: ").strip()
+        return load_matrix_from_file(filename)
+    else:
+        return input_matrix("Enter the matrix")
+
+
+def substitute_symbols(matrix):
+    """Substitutes symbols in a symbolic matrix with user-provided values."""
+    substituted_matrix = []
+    for row in matrix:
+        new_row = []
+        for element in row:
+            if isinstance(element, sp.Expr) and element.free_symbols:
+                for symbol in element.free_symbols:
+                    value = sp.sympify(input(f"Enter value for {symbol}: "))
+                    element = element.subs(symbol, value)
+            new_row.append(element)
+        substituted_matrix.append(new_row)
+    return substituted_matrix
+
+
+def plot_matrix(matrix, title="Matrix Visualization"):
+    """
+    Enhanced plotting function that can handle both numeric and symbolic matrices.
+    For numeric matrices, it creates a detailed visualization with cell annotations.
+    """
+    # Convert symbolic matrix to numeric if possible
+    if any(isinstance(item, sp.Expr) for row in matrix for item in row):
+        try:
+            # Attempt to evaluate the matrix if it's purely symbolic (no free symbols)
+            matrix_eval = [[float(item.evalf()) if item.is_Number else None for item in row] for row in matrix]
+            if all(item is not None for row in matrix_eval for item in row):
+                matrix = np.array(matrix_eval)
+            else:
+                print("Plotting is only available for numeric matrices or symbolic matrices with no free symbols.")
+                return
+        except Exception as e:
+            print(f"Unable to evaluate symbolic matrix for plotting: {e}")
+            return
+    else:
+        matrix = np.array(matrix)  # Ensure matrix is a NumPy array for plotting
+
+    # Proceed with plotting for numeric matrices
+    fig, ax = plt.subplots()
+    cax = ax.matshow(matrix, cmap='viridis')
+    fig.colorbar(cax)
+
+    # Annotate the cells with the numeric values
+    for (i, j), val in np.ndenumerate(matrix):
+        ax.text(j, i, f"{val:.2f}", ha='center', va='center', color='white' if val < matrix.mean() else 'black')
+
+    plt.title(title)
+    plt.show()
+
+
+def calculate_matrix_subtraction_operational(m1, m2):
+    """
+    Core operational function for matrix subtraction, handling both symbolic and numeric matrices.
+    """
+    matrix1, matrix2 = ensure_matrix_format(m1), ensure_matrix_format(m2)
+
+    if isinstance(matrix1, sp.Matrix) or isinstance(matrix2, sp.Matrix):
+        result = matrix1 - matrix2
+    else:
+        result = np.subtract(matrix1, matrix2)
+
+    return result.tolist() if hasattr(result, 'tolist') else result
 
 
 def calculate_matrix_subtraction(m1, m2):
-    matrix1 = np.array(m1)
-    matrix2 = np.array(m2)
-    return np.subtract(matrix1, matrix2).tolist()
+    """
+    Enhanced matrix subtraction function integrating user input, symbolic substitution, and additional features.
+    """
+    print("Input for the first matrix:")
+    m1 = input_or_load_matrix("Enter the first matrix")
+    print("Input for the second matrix:")
+    m2 = input_or_load_matrix("Enter the second matrix")
+
+    # Handle symbolic substitutions if applicable
+    has_symbols = any(isinstance(item, sp.Expr) for row in m1 + m2 for item in row)
+    if has_symbols:
+        print("Symbolic expressions detected. You'll have the option to substitute symbols with values.")
+        if input("Substitute symbols in the first matrix? (yes/no): ").strip().lower() == 'yes':
+            m1 = substitute_symbols(m1)
+        if input("Substitute symbols in the second matrix? (yes/no): ").strip().lower() == 'yes':
+            m2 = substitute_symbols(m2)
+
+    # Perform matrix subtraction using the core operational function
+    result_list = calculate_matrix_subtraction_operational(m1, m2)
+
+    # Pretty print the result
+    pretty_print_matrix(result_list, "Result Matrix")
+
+    # Save and plot functionalities
+    if input("Do you want to save the result matrix? (yes/no): ").strip().lower() == 'yes':
+        filename = input("Enter the filename (default 'matrix_result.txt'): ").strip() or "matrix_result.txt"
+        format_choice = input("Choose the format - txt, csv, or json (default 'txt'): ").strip() or "txt"
+        save_matrix_to_file(result_list, filename, format_choice)
+
+    if all(isinstance(val, (int, float)) for row in result_list for val in row) and \
+            input("Do you want to plot the result matrix? (yes/no): ").strip().lower() == 'yes':
+        plot_matrix(np.array(result_list), "Subtraction Result")
 
 
-def calculate_matrix_multiplication(m1, m2):
-    matrix1 = np.array(m1)
-    matrix2 = np.array(m2)
-    return np.dot(matrix1, matrix2).tolist()
-
-
-def calculate_matrix_division(m1, m2):
-    matrix1 = np.array(m1)
-    matrix2 = np.array(m2)
-    if np.linalg.det(matrix2) != 0:  # Check if the second matrix is invertible
-        return np.dot(matrix1, np.linalg.inv(matrix2)).tolist()
+def ensure_matrix_format(matrix):
+    if any(isinstance(item, sp.Expr) for row in matrix for item in row):
+        return sp.Matrix(matrix)
     else:
-        return "Error: The second matrix is not invertible."
+        return np.array(matrix)
 
 
-def calculate_matrix_inverse(matrix):
-    if np.linalg.det(matrix) != 0:  # Check if the matrix is invertible
-        return np.linalg.inv(matrix).tolist()
+def calculate_matrix_multiplication():
+    print("Matrix Multiplication")
+    m1 = input_matrix("Enter the first matrix (type 'done' when finished with the matrix):")
+    m2 = input_matrix("Enter the second matrix (type 'done' when finished with the matrix):")
+
+    matrix1 = ensure_matrix_format(m1)
+    matrix2 = ensure_matrix_format(m2)
+
+    # Dimension compatibility check
+    try:
+        if isinstance(matrix1, np.ndarray) and isinstance(matrix2, np.ndarray):
+            assert matrix1.shape[1] == matrix2.shape[0], "Dimension mismatch"
+            result = np.dot(matrix1, matrix2)
+        elif isinstance(matrix1, sp.Matrix) and isinstance(matrix2, sp.Matrix):
+            result = matrix1 * matrix2
+        else:
+            raise ValueError("Unsupported matrix types.")
+    except (AssertionError, sp.ShapeError, ValueError) as e:
+        print(f"Error: {e}")
+        return
+
+    result_list = result.tolist() if hasattr(result, 'tolist') else result
+
+    print("Result of Matrix Multiplication:")
+    for row in result_list:
+        print(" ".join(str(val) for val in row))
+
+    # Symbolic evaluation option
+    if any(isinstance(item, sp.Expr) for row in result_list for item in row):
+        if input("Evaluate symbolic expressions in the result? (yes/no): ").strip().lower() == 'yes':
+            result_list = [[val.evalf() for val in row] for row in result_list]
+
+    # Visualization option for numeric results
+    if all(isinstance(val, (int, float, sp.Number)) for row in result_list for val in row):
+        if input("Visualize the result matrix? (yes/no): ").strip().lower() == 'yes':
+            plot_matrix(np.array(result_list), "Result of Matrix Multiplication")
+
+    # Save result option
+    if input("Save the result matrix to a file? (yes/no): ").strip().lower() == 'yes':
+        filename = input("Enter filename (e.g., 'result_matrix.txt'): ").strip()
+        format_choice = input("File format (txt, csv, json): ").strip().lower()
+        save_matrix_to_file(result_list, filename, format_choice)  # Assuming this function is implemented as discussed
+
+
+def format_element(element, width, content_type, colorize=True):
+    """
+    Unified function to format an element for pretty printing, combining dynamic coloring,
+    precision control, and optional colorization.
+    """
+    # Default formatting and colors
+    reset_color = "\033[0m"
+    color = "\033[94m" if content_type == "numeric" else "\033[92m" if content_type == "symbolic" else "\033[0m"
+    negative_color = "\033[91m"  # Red for negative numbers
+
+    # Formatting based on content type
+    if content_type == 'numeric':
+        formatted = f"{float(element):.2f}".rjust(width)  # Ensure conversion to float for consistent formatting
     else:
-        return "Error: The matrix is not invertible."
+        formatted = str(element).rjust(width)
+
+    # Apply colorization based on the value and user choice
+    if colorize:
+        if content_type == 'numeric' and float(element) < 0:
+            return f"{negative_color}{formatted}{reset_color}"
+        else:
+            return f"{color}{formatted}{reset_color}" if content_type != "mixed" else formatted
+    else:
+        return formatted
 
 
-def calculate_matrix_transpose(matrix):
-    return np.transpose(matrix).tolist()
+def calculate_matrix_division():
+    print("Matrix Division (A * B^-1)")
+    m1 = input_matrix("Enter the first matrix (A):")
+    m2 = input_matrix("Enter the second matrix (B):")
+
+    matrix1 = ensure_matrix_format(m1)
+    matrix2 = ensure_matrix_format(m2)
+
+    try:
+        # Check for invertibility of the second matrix
+        if isinstance(matrix2, sp.Matrix):
+            if matrix2.det() == 0:
+                raise ValueError("The second matrix is not invertible.")
+            matrix2_inv = matrix2.inv()
+        elif isinstance(matrix2, np.ndarray):
+            det = np.linalg.det(matrix2)
+            if det == 0 or np.isclose(det, 0):
+                raise ValueError("The second matrix is not invertible.")
+            matrix2_inv = np.linalg.inv(matrix2)
+        else:
+            raise TypeError("Unknown matrix type.")
+
+        # Perform matrix division
+        result = matrix1 * matrix2_inv
+        result_list = result.tolist() if hasattr(result, 'tolist') else result
+
+        # Display the result
+        pretty_print_matrix(result_list, "Result of Matrix Division (A * B^-1)")
+    except ValueError as e:
+        print(f"Error: {e}")
+    except TypeError as e:
+        print(f"Error: {e}")
+
+
+def calculate_matrix_inverse(m1):
+    return np.linalg.inv(m1).tolist()
+
+
+def calculate_matrix_transpose(m1):
+    return np.transpose(m1).tolist()
 
 
 def validate_complex_input(complex_number):
@@ -851,34 +1424,87 @@ def matrix_div(m1_str, m2_str):
     return matrix_mul(m1, m2_inv)
 
 
-def preprocess_equation(equation):
+def preprocess_equation(equation: str) -> str:
     """
     Preprocess the equation to handle common input formats and issues,
-    such as adding explicit multiplication signs and fixing exponentiation notation.
+    including explicit multiplication signs, exponentiation notation, and special functions.
     """
-    # Add explicit multiplication between numbers/variables and parentheses or between variable and number
-    equation = re.sub(r'(?<=[0-9)])(?=\()', '*(', equation)
-    equation = re.sub(r'(?<=[0-9)])(?=[a-zA-Z])', '*', equation)
-    equation = re.sub(r'(?<=[a-zA-Z])(?=[0-9(])', '*', equation)
+    # Remove extra spaces
+    equation = equation.replace(' ', '')
+
+    # Handle unary minus
+    equation = re.sub(r'(?<=^)-', '0-', equation)
+    equation = re.sub(r'(?<=\()-', '0-', equation)
+
+    # Add explicit multiplication
+    equation = re.sub(r'(?<=[0-9\)])\(', '*(', equation)
+    equation = re.sub(r'(?<=[0-9a-zA-Z\)])\b', '*', equation)
+    equation = re.sub(r'\b(?=[a-zA-Z\(])', '*', equation)
 
     # Replace caret notation with ** for exponentiation
     equation = equation.replace('^', '**')
 
+    # Handle decimal numbers
+    equation = re.sub(r'(?<=\d)\.(?=\d)', '*0.', equation)
+    equation = re.sub(r'(?<=\D)\.(?=\d)', '0.', equation)
+    equation = re.sub(r'(?<=\d)\.(?=\D)', '0.*', equation)
+
+    # Handle special constants and functions
+    equation = re.sub(r'\bpi\b', 'pi', equation)
+    equation = re.sub(r'\be\b', 'E', equation)
+    equation = re.sub(r'\bE\^', 'exp(', equation) + (')' if 'E^' in equation else '')
+
+    # Handle trigonometric functions
+    for func in ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']:
+        equation = re.sub(fr'\b{func}\b', fr'{func}(', equation) + (')' if func in equation else '')
+
+    # Handle square root notation
+    equation = equation.replace('sqrt', 'sqrt(') + (')' if 'sqrt' in equation else '')
+
+    # Handle logarithm notation
+    equation = equation.replace('log', 'log(') + (')' if 'log' in equation else '')
+
+    # Handle fractions
+    equation = re.sub(r'(\d+)/(\d+)', r'(\1/\2)', equation)
+
     return equation
 
 
-def parse_input(equation: str, variables: str) -> "Expr":
+def parse_input(equation: str, variables: str, differentiate: str = None, integrate_var: str = None, simplify_expr: bool = False, substitutions: dict = None) -> "Expr":
     """
     Parses a polynomial equation from a string into a SymPy expression, considering the specified variables.
+    Optionally performs differentiation, integration, simplification, and substitution.
     """
-    equation = preprocess_equation(equation)
-    # Convert variable names to SymPy symbols
-    vars = symbols(variables)
-    # Replace '^' with '**' for exponentiation
-    equation = equation.replace('^', '**')
-    # Parse the equation string to a SymPy expression
-    expr = sympify(equation, locals={str(v): v for v in vars})
-    return expr
+    try:
+        equation = preprocess_equation(equation)
+        # Convert variable names to SymPy symbols
+        vars = symbols(variables)
+        # Replace '^' with '**' for exponentiation
+        equation = equation.replace('^', '**')
+        # Parse the equation string to a SymPy expression
+        expr = sympify(equation, locals={str(v): v for v in vars})
+
+        # Perform differentiation if specified
+        if differentiate:
+            expr = diff(expr, symbols(differentiate))
+
+        # Perform integration if specified
+        if integrate_var:
+            expr = integrate(expr, symbols(integrate_var))
+
+        # Simplify the expression if specified
+        if simplify_expr:
+            expr = simplify(expr)
+
+        # Perform substitutions if specified
+        if substitutions:
+            expr = expr.subs(substitutions)
+
+        return expr
+    except SympifyError as e:
+        raise ValueError(f"Error parsing the equation: {e}")
+    except Exception as e:
+        raise ValueError(f"Unexpected error: {e}")
 
 
 def perform_operation(operation, expr):
@@ -1011,7 +1637,7 @@ def main():
                               "scalar_mul, poly_add, poly_sub, poly_mul, poly_div, solve_poly, matrix_add, matrix_sub, matrix_mul, "
                               "matrix_div, matrix_trans, matrix_inv, group_order, group_elements, subgroups, group_isomorphisms, "
                               "ring_order, ring_elements, ideals, ring_isomorphisms, field_order, field_elements, subfields, "
-                              "field_isomorphisms, trig, hyperbolic, exp, solve").strip()
+                              "field_isomorphisms, trig, hyperbolic, exp, solve, list_generators").strip()
 
             if operation in ["+", "-", "*", "/"]:
                 if operation == "exit":
@@ -1233,3 +1859,172 @@ def main():
                                 print(f"Result: {result}")
                 except ValueError as e:
                     print(f"Error: {e}")
+            elif operation in ["matrix_add", "matrix_sub", "matrix_mul", "matrix_div", "matrix_trans",
+                               "matrix_inv"]:
+                try:
+                    # Skip pre-input for matrix_div as it's handled within the function
+                    if operation == "matrix_div":
+                        calculate_matrix_division()  # Invokes user input within the function
+                        continue  # Proceed to the next iteration of the loop
+
+                    # For matrix multiplication, call the enhanced function directly
+                    elif operation == "matrix_mul":
+                        calculate_matrix_multiplication()  # Directly call the enhanced function
+                        continue  # Skip the rest of the loop
+
+                    # For other operations, collect inputs before operation selection
+                    m1 = m2 = None
+                    if operation in ["matrix_add", "matrix_sub"]:
+                        m1 = input_matrix("Enter the first matrix:")
+                        m2 = input_matrix("Enter the second matrix:")
+                    elif operation in ["matrix_trans", "matrix_inv"]:
+                        m1 = input_matrix("Enter the matrix:")
+
+                    # Map operation to function
+                    operation_function_map = {
+                        "matrix_add": matrix_addition,
+                        "matrix_sub": calculate_matrix_subtraction,
+                        # "matrix_div" is not listed here as it's already been handled
+                        "matrix_trans": calculate_matrix_transpose,
+                        "matrix_inv": calculate_matrix_inverse
+                    }
+
+                    # Execute operation
+                    if operation in operation_function_map:
+                        result = operation_function_map[operation](m1) if operation in ["matrix_trans",
+                                                                                        "matrix_inv"] else \
+                            operation_function_map[operation](m1, m2)
+                        pretty_print_matrix(result, "Result Matrix")
+                    else:
+                        print("Unsupported operation.")
+
+                except Exception as e:
+                    print(f"Error: {e}")
+            elif operation in ["group_order", "group_elements", "subgroups", "group_isomorphisms", "list_generators"]:
+                try:
+                    logging.basicConfig(level=logging.INFO)
+                    equation1 = input("Enter the first group equation: ")
+                    group = parse_group_equation(equation1, delimiter=',', valid_element_pattern=r'^[a-zA-Z0-9]+$')
+                    print(f"Parsed group: {group}")
+                except ValueError as e:
+                    print(e)
+                    exit()  # Use exit() instead of return if this code is not inside a function
+
+                if operation == "group_isomorphisms":
+                    try:
+                        equation2 = input("Enter the second group equation: ")
+                        group2 = parse_group_equation(equation2, delimiter=',', valid_element_pattern=r'^[a-zA-Z0-9]+$')
+                        print(f"Parsed second group: {group2}")
+                    except ValueError as e:
+                        print(e)
+                        exit()  # Use exit() instead of return if this code is not inside a function
+
+                elif operation == "list_generators":
+                    # Define all operation types
+                    operation_types = ["addition", "multiplication", "matrix_multiplication", "string_concatenation"]
+
+                    # Iterate over each operation type and perform the corresponding group operation
+                    for operation_type in operation_types:
+                        try:
+                            print(f"Using operation type: {operation_type}")
+                            generators = list_all_generators(group, lambda x, y: group_operation(x, y, operation_type))
+                            print(f"Generators of the group: {generators}")
+                        except ValueError as e:
+                            print(e)
+                            exit()  # Use exit() instead of return if this code is not inside a function
+                        except Exception as e:
+                            print(f"Error in list_generators with {operation_type}: {e}")
+
+                try:
+                    if operation == "subgroups":
+                        analyze_and_visualize_subgroups(group, lambda x, y: group_operation(x, y, operations))
+                    elif operation == "group_order":
+                        print(
+                            f"Result: {calculate_group_order(group)}")  # Assuming this function is integrated as shown earlier
+                    elif operation == "group_elements":
+                        print(
+                            f"Result: {calculate_group_elements(group)}")  # Assuming this function is defined elsewhere
+                    elif operation == "group_isomorphisms" and 'group2' in locals():
+                        print(
+                            f"Result: {calculate_group_isomorphisms(group, group2)}")  # Assuming this function is defined elsewhere
+                except Exception as e:
+                    print(f"Error: {e}")
+            elif operation in ["ring_order", "ring_elements", "ideals", "ring_isomorphisms"]:
+                try:
+                    equation1 = parse_input(input("Enter the first ring equation: "))
+                    # Check if equation is in the format 'R = {a, b, c, ...}'
+                    if '=' in equation1 and '{' in equation1 and '}' in equation1:
+                        ring = equation1.split('=')[1].strip().replace('{', '').replace('}', '').split(',')
+                    else:
+                        raise ValueError
+                    if operation == "ring_isomorphisms":
+                        equation2 = parse_input(input("Enter the second ring equation: "))
+                        # Check if equation is in the format 'S = {d, e, f, ...}'
+                        if '=' in equation2 and '{' in equation2 and '}' in equation2:
+                            ring2 = equation2.split('=')[1].strip().replace('{', '').replace('}', '').split(',')
+                        else:
+                            raise ValueError
+                except ValueError:
+                    print(
+                        "Invalid equation format. Please enter a valid ring equation in the format 'R = {a, b, c, "
+                        "...}'.")
+                    return
+
+                if operation == "ring_order":
+                    print(f"Result: {calculate_ring_order(ring)}")
+                elif operation == "ring_elements":
+                    print(f"Result: {calculate_ring_elements(ring)}")
+                elif operation == "ideals":
+                    print(f"Result: {calculate_ideals(ring)}")
+                elif operation == "ring_isomorphisms":
+                    print(f"Result: {calculate_ring_isomorphisms(ring, ring2)}")
+                elif operation in ["field_order", "field_elements", "subfields", "field_isomorphisms" "exit"]:
+                    if operation == "exit":
+                        break
+                    try:
+                        equation1 = parse_input(input("Enter the first field equation: "))
+                        # Check if equation is in the format 'F = {a, b, c, ...}'
+                        if '=' in equation1 and '{' in equation1 and '}' in equation1:
+                            field = equation1.split('=')[1].strip().replace('{', '').replace('}', '').split(',')
+                        else:
+                            raise ValueError
+                        if operation == "field_isomorphisms":
+                            equation2 = parse_input(input("Enter the second field equation: "))
+                            # Check if equation is in the format 'G = {d, e, f, ...}'
+                            if '=' in equation2 and '{' in equation2 and '}' in equation2:
+                                field2 = equation2.split('=')[1].strip().replace('{', '').replace('}', '').split(',')
+                            else:
+                                raise ValueError
+                    except ValueError:
+                        print(
+                            "Invalid equation format. Please enter a valid field equation in the format 'F = {a, b, "
+                            "c, ...}'.")
+                        return
+
+                    if operation == "field_order":
+                        print(f"Result: {calculate_field_order(field)}")
+                    elif operation == "field_elements":
+                        print(f"Result: {calculate_field_elements(field)}")
+                    elif operation == "subfields":
+                        print(f"Result: {calculate_subfields(field)}")
+                    elif operation == "field_isomorphisms":
+                        print(f"Result: {calculate_field_isomorphisms(field, field2)}")
+                elif operation == "create_permutation_group":
+                    if operation == "exit":
+                        break
+                    try:
+                        equation = parse_input(input("Enter the permutation equation: "))
+                        # Check if equation is in the format 'P = (a b c), (d e f), ...'
+                        if '=' in equation and '(' in equation and ')' in equation:
+                            permutations = equation.split('=')[1].strip().split(',')
+                            # Remove parentheses and split by spaces to get individual elements
+                            permutations = [p.replace('(', '').replace(')', '').split() for p in permutations]
+                        else:
+                            raise ValueError
+                    except ValueError:
+                        print(
+                            "Invalid equation format. Please enter a valid permutation equation in the format 'P = (a "
+                            "b c), (d e f), ...'.")
+                        return
+
+                    print(f"Permutation Group: {create_permutation_group(*permutations)}")

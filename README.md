@@ -9,7 +9,7 @@ BoldyDeadCoder/BoldyDeadCoder is a ✨ special ✨ repository because its `READM
 You can click the Preview link to take a look at your changes.
 --->
 
-I'm a hybrid coder and somewhat experienced, I have created many projects and the one i'm working on is the biggest of them all.
+I'm a hybrid coder, I have created many projects and the one i'm working on is the biggest of them all.
 
 The newly added functionalities into the main code provide a robust and comprehensive calculator that can handle a wide range of mathematical operations. Here’s an in-depth review of what they add:
 
